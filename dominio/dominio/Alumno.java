@@ -47,7 +47,6 @@ public class Alumno extends Persona implements Comparable<Alumno>{
 	public Alumno(String nombre, String apellido
 			,  String dni, String telefono, String fechaCreacionCorta, String cursosInscriptos) throws PrincipalException{
 		super(nombre, apellido,  dni, telefono);
-//		this.fechaCreacion = getFechaGregoriana();
 		
 		this.fechaCreacionCorta =  fechaCreacionCorta;
 		cursosInscriptosNombres = cursosInscriptos;
