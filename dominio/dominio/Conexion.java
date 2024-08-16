@@ -16,8 +16,7 @@ public class Conexion {
 	private static final String controlador= "com.mysql.cj.jdbc.Driver";
 	private String cadena="jdbc:mysql://"+ip+":"+puerto+"/"+bd;
 	
-	
-	
+	//comentario from ubuntu		
 	static {
 		try {
 			Class.forName(controlador);
