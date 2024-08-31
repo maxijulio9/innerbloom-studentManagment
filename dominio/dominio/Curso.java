@@ -18,6 +18,7 @@ public class Curso implements Comparable<Curso> {
 	private String profesorAsignado;
 	
 	public Curso() throws PrincipalException {
+
 	}
 
 	public Curso(String nombre, String nivel, String totalHoras, String cantidadAlumnos,

@@ -24,8 +24,10 @@ public class GestorInstituto {
 	private String[] listaProfesores = {"Sin definir","Jeff Bezos","Hedy Lamar","Marcos Galperin", "Jorge Tejada","Mark Zuckeberg", "Elon Musk", "Mary Lee Woods"};
 	private ArrayList<Curso> listaCurso;
 
+
 	private GestorInstituto() {
 		listaAlumnos = new ArrayList<Alumno>();
+
 		listaCurso = new ArrayList<Curso>();
 	}
 	
@@ -93,7 +95,6 @@ public class GestorInstituto {
 				.filter(a->a.getDni().equals(alumno.getDni()))
 				.findAny().isPresent();
 	}
-	
 
 	public boolean agregarCurso(Curso curso) throws PrincipalException {
 		if (noExisteCurso1(curso)) {
@@ -115,18 +116,7 @@ public class GestorInstituto {
 	    }
 	    return true; // El curso no existe en la lista
 	}
-//	public boolean existeCurso(Curso curso) {
-////		this.listaCurso.stream().forEach(c-> c.getNombre().equalsIgnoreCase(curso.getNombre()));
-//		 return this.listaCurso.stream()
-//		            .anyMatch(c -> c.getCodigo() == curso.getCodigo() || c.getNombre().equalsIgnoreCase(curso.getNombre()));
-////		return this.listaCurso.stream().filter(c->c.equals(curso)).findAny().isPresent()
-////				|| this.listaCurso.stream().filter(c-> c.getNombre().equalsIgnoreCase(curso.getNombre())).findAny().isPresent();
-////		return this.listaCurso.contains(curso);
-//	}
-	
-	
-	//Eliminación}
-	
+
 	public boolean eliminarAlumno(String dni) throws PrincipalException {
 		
 		ArrayList<Alumno> listaAlumnosDB  =  PersistenciaDB.getAlumnos();
