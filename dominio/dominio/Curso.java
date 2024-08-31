@@ -29,7 +29,6 @@ public class Curso implements Comparable<Curso> {
 		setTotalHoras(totalHoras);
 		setCantidadAlumnos(cantidadAlumnos);
 		this.profesorAsignado = profesorAsignado;
-//		codigo2++;
 	}
 
 	public Curso(int codigo, String nombre, String nivel, String totalHoras, String cantidadAlumnos,
@@ -41,7 +40,6 @@ public class Curso implements Comparable<Curso> {
 		setTotalHoras(totalHoras);
 		setCantidadAlumnos(cantidadAlumnos);
 		this.profesorAsignado = profesorAsignado;
-//		codigo2++;
 	}
 	private int generarCodigo(){
 		int numero = (int)(Math.random()*500+1);
