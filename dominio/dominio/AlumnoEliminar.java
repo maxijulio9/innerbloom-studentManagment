@@ -1,11 +1,12 @@
 package dominio;
 import java.util.Objects;
 
-import Alumno;
-import GestorInstituto;
+import dominio.Alumno;
+import dominio.GestorInstituto;
 public class AlumnoEliminar {
 
 
+    /*
     public AlumnoEliminar(dominio.GestorInstituto gestor, String dni) {
         if (existeAlumno(gestor)) {
             gestor.listaAlumnos.delete(alumno.getDni());
@@ -17,5 +18,6 @@ public class AlumnoEliminar {
                     .findAny().isPresent();
         }
     }
+    */
 
 }
