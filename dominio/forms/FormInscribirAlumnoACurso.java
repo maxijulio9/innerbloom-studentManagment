@@ -17,11 +17,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import dominio.Alumno;
 import dominio.Curso;
-import dominio.GestorInstituto;
+import dominio.Problema.GestorInstitutoOld;
 import dominio.Matricula;
 import exceptions.MatriculaExistenteException;
 import exceptions.PrincipalException;
@@ -142,7 +141,7 @@ public class FormInscribirAlumnoACurso extends JFrame implements ActionListener{
 		JButton source = (JButton)e.getSource();
 
 		if (source == btnAceptar) {
-			GestorInstituto gp = GestorInstituto.getInstancia();
+			GestorInstitutoOld gp = GestorInstitutoOld.getInstancia();
 			ArrayList<Curso> cursos = gp.getListaCursos();//PersistenciaDBCurso.getCursos();
 			ArrayList<Alumno> alumnos = gp.getListaAlumnos();
 			

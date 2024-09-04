@@ -2,7 +2,6 @@ package forms;
 
 import java.awt.BorderLayout;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -11,9 +10,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -22,21 +18,16 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.border.Border;
 
 import dominio.Alumno;
-import dominio.Conexion;
-import dominio.GestorInstituto;
+import dominio.Problema.GestorInstitutoOld;
 import exceptions.ApellidoVacioException;
 import exceptions.DniInvalidoException;
 import exceptions.NombreVacioException;
 import exceptions.PrincipalException;
 import exceptions.TelefonoInvalidoException;
-import persistencia.PersistenciaDB;
-
 
 
 public class FormCargarAlumno extends JFrame implements ActionListener {
@@ -153,7 +144,7 @@ public class FormCargarAlumno extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		JButton source = (JButton) e.getSource();
 		if (source ==  btnAceptar) {
-			GestorInstituto gp = GestorInstituto.getInstancia();
+			GestorInstitutoOld gp = GestorInstitutoOld.getInstancia();
 			
 			try {
 				txtNombre.setBackground(Color.WHITE);

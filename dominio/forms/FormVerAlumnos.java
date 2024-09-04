@@ -2,7 +2,6 @@ package forms;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -16,20 +15,16 @@ import java.util.Comparator;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import dominio.Alumno;
-import dominio.Curso;
-import dominio.GestorInstituto;
+import dominio.Problema.GestorInstitutoOld;
 import exceptions.PrincipalException;
-import persistencia.PersistenciaDB;
 
 public class FormVerAlumnos extends JFrame implements ActionListener{
 
@@ -65,7 +60,7 @@ public class FormVerAlumnos extends JFrame implements ActionListener{
 		panelListado = iniciarPanel();
 		panelListado.setBackground(new Color(214, 234, 248));
 		
-		GestorInstituto gp = GestorInstituto.getInstancia();
+		GestorInstitutoOld gp = GestorInstitutoOld.getInstancia();
 		ArrayList<Alumno> alumnos = gp.getListaAlumnos();//PersistenciaDB.getAlumnos();
 		JScrollPane scrollPane = new JScrollPane(tabla);
 		tabla.setBackground(new Color(254, 245, 231));
@@ -188,7 +183,7 @@ public class FormVerAlumnos extends JFrame implements ActionListener{
 		// TODO Auto-generated method stub
 //		JButton source = (JButton)e.getSource();
 		Object source =  e.getSource();
-		GestorInstituto gp = GestorInstituto.getInstancia();
+		GestorInstitutoOld gp = GestorInstitutoOld.getInstancia();
 		ArrayList<Alumno> alumnos = null;
 		if (source == btnOrdApellido) {
 			

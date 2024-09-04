@@ -19,10 +19,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import dominio.Conexion;
-import dominio.GestorInstituto;
+import dominio.Problema.GestorInstitutoOld;
 import exceptions.DniInvalidoException;
 import exceptions.PrincipalException;
-import persistencia.PersistenciaDB;
 
 public class FormEliminarAlumno extends JFrame implements ActionListener{
 
@@ -117,7 +116,7 @@ public class FormEliminarAlumno extends JFrame implements ActionListener{
 		Connection cn = null;
 
 		if (source == btnAceptar) {
-			GestorInstituto gp = GestorInstituto.getInstancia();
+			GestorInstitutoOld gp = GestorInstitutoOld.getInstancia();
 			if (txtDni.getText() == "") {
 				JOptionPane.showMessageDialog(this, "Ingresá el DNI.", "Se produjo un error",
 						JOptionPane.ERROR_MESSAGE);

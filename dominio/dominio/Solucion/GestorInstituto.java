@@ -1,28 +1,26 @@
-package dominio;
+package dominio.Solucion;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
-import javax.swing.JOptionPane;
-
-import exceptions.ApellidoVacioException;
-import exceptions.CantidadHorasException;
-import exceptions.DniInvalidoException;
-import exceptions.NombreVacioException;
-import exceptions.PrincipalException;
-import exceptions.TelefonoInvalidoException;
+import dominio.Alumno;
+import dominio.Curso;
+import exceptions.*;
 import persistencia.PersistenciaDB;
 import persistencia.PersistenciaDBCurso;
+
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 
 public class GestorInstituto {
 	private static GestorInstituto ge;
-	private ArrayList<Alumno> listaAlumnos;
-	private String[] listaProfesores = {"Sin definir","Jeff Bezos","Hedy Lamar","Marcos Galperin", "Jorge Tejada","Mark Zuckeberg", "Elon Musk", "Mary Lee Woods"};
-	private ArrayList<Curso> listaCurso;
+	public ArrayList<Alumno> listaAlumnos;
+	public String[] listaProfesores = {"Sin definir","Jeff Bezos","Hedy Lamar","Marcos Galperin", "Jorge Tejada","Mark Zuckeberg", "Elon Musk", "Mary Lee Woods"};
+	public ArrayList<Curso> listaCurso;
+
+	private AlumnoCreacion alumnoCreacion;
+
 
 
 	private GestorInstituto() {
@@ -55,7 +53,20 @@ public class GestorInstituto {
 		this.listaCurso = listaCurso;
 	}
 	
-	//Agregar elementos
+	//Agregar alumnos ------------------------------
+
+	//Principio S
+	public boolean agregarAlumnoAlListado(Alumno alumno){
+		return alumnoCreacion.agregarAlumno(alumno, ge);
+
+		//return this.listaAlumnos.add(alumno);
+	}
+	public boolean agregarAlumnoAlListado(String nombre, String apellido, String dni, String telefono) throws PrincipalException {
+		//Alumno alumno =  new Alumno( nombre,  apellido,  dni,  telefono);
+		return alumnoCreacion.agregarAlumno( nombre,  apellido,  dni,  telefono, ge);
+	}
+
+	/*
 	public boolean agregarAlumno(Alumno alumno) {//no debe recibir alumno, sino los datos de los text field
 		if (!existeAlumno1(alumno)) {
 			PersistenciaDB.insert(alumno);
@@ -64,8 +75,9 @@ public class GestorInstituto {
 		}
 		return false;	
 	}
+
+
 	public boolean agregarAlumno(String nombre, String apellido, String dni, String telefono) throws PrincipalException {//no debe recibir alumno, sino los datos de los text field
-//		Alumno alumno;
 		
 		try {
 			Alumno alumno = new Alumno(nombre, apellido, dni, telefono);
@@ -87,7 +99,10 @@ public class GestorInstituto {
 			return false;
 		}		
 	}
-	
+	*/
+
+	/*
+	//This method servía en la old version de gestor para validar si existía el alumno in the arraylist listadoAlumnos
 	private boolean existeAlumno1(Alumno alumno) {
 		ArrayList<Alumno> listaAlumnosDB = PersistenciaDB.getAlumnos();
 		
@@ -95,6 +110,7 @@ public class GestorInstituto {
 				.filter(a->a.getDni().equals(alumno.getDni()))
 				.findAny().isPresent();
 	}
+	 */
 
 	public boolean agregarCurso(Curso curso) throws PrincipalException {
 		if (noExisteCurso1(curso)) {

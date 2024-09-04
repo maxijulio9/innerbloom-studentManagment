@@ -18,14 +18,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 
 import dominio.Alumno;
-import dominio.GestorInstituto;
 import exceptions.ApellidoVacioException;
 import exceptions.NombreVacioException;
 import exceptions.PrincipalException;
-import exceptions.TelefonoInvalidoException;
 import persistencia.PersistenciaDB;
 
 public class FormModificarAlumno extends JFrame implements ActionListener{

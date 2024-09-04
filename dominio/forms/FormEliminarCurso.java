@@ -10,7 +10,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -18,15 +17,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
-import dominio.Alumno;
 import dominio.Curso;
-import dominio.GestorInstituto;
-import exceptions.DniInvalidoException;
-import exceptions.PrincipalException;
-import persistencia.PersistenciaDB;
-import persistencia.PersistenciaDBCurso;
+import dominio.Problema.GestorInstitutoOld;
 
 public class FormEliminarCurso extends JFrame implements ActionListener{
 
@@ -100,7 +93,7 @@ public class FormEliminarCurso extends JFrame implements ActionListener{
 	}
 	
 	private void cargarListadoCurso() {
-		GestorInstituto gp = GestorInstituto.getInstancia();
+		GestorInstitutoOld gp = GestorInstitutoOld.getInstancia();
 		ArrayList<Curso> cursos = gp.getListaCursos() ;//PersistenciaDBCurso.getCursos();
 		listadoCursos.removeAllItems();
 		for (Curso curso : cursos) {
@@ -124,7 +117,7 @@ public class FormEliminarCurso extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 
 		JButton source = (JButton) e.getSource();
-		GestorInstituto gp = GestorInstituto.getInstancia();
+		GestorInstitutoOld gp = GestorInstitutoOld.getInstancia();
 		if (source == btnAceptar) {
 			if (listadoCursos.getSelectedItem() == null) {
 				JOptionPane.showMessageDialog(this, "Por favor seleccioná el curso que querés eliminar", "Datos incorrectos",

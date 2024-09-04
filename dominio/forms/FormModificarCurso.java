@@ -10,7 +10,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -19,18 +18,14 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 
-import dominio.Alumno;
 import dominio.Curso;
-import dominio.GestorInstituto;
-import exceptions.ApellidoVacioException;
+import dominio.Problema.GestorInstitutoOld;
 import exceptions.CantidadAlumnosException;
 import exceptions.CantidadHorasException;
 import exceptions.NivelVacioException;
 import exceptions.NombreVacioException;
 import exceptions.PrincipalException;
-import persistencia.PersistenciaDB;
 import persistencia.PersistenciaDBCurso;
 
 public class FormModificarCurso extends JFrame implements ActionListener{
@@ -157,7 +152,7 @@ public class FormModificarCurso extends JFrame implements ActionListener{
 	}
 	
 	private void cargarListadoProfes(JPanel panelInput) {
-		String[] gp = GestorInstituto.getInstancia().obtenerListadoProfes();
+		String[] gp = GestorInstitutoOld.getInstancia().obtenerListadoProfes();
 		
 		for (String profe : gp) {
 			listadoProfes.addItem(profe);
@@ -165,7 +160,7 @@ public class FormModificarCurso extends JFrame implements ActionListener{
 		panelInput.add(listadoProfes);
 	}
 	private String[] cargarListadoProfes1(JPanel panelInput) {
-		String[] gp = GestorInstituto.getInstancia().obtenerListadoProfes();
+		String[] gp = GestorInstitutoOld.getInstancia().obtenerListadoProfes();
 		
 		for (String profe : gp) {
 			listadoProfes.addItem(profe);
@@ -204,7 +199,7 @@ public class FormModificarCurso extends JFrame implements ActionListener{
 		Object source =  e.getSource();
 		
 		if (source == btnAceptar) {
-			GestorInstituto gp = GestorInstituto.getInstancia();
+			GestorInstitutoOld gp = GestorInstitutoOld.getInstancia();
 			ArrayList<Curso> cursos = gp.getListaCursos();
 	
 

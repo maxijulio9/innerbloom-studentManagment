@@ -6,15 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import javax.swing.JOptionPane;
 
 import dominio.Curso;
-import exceptions.PrincipalException;
-import dominio.Alumno;
 import dominio.Conexion;
 
 public class PersistenciaDBCurso {

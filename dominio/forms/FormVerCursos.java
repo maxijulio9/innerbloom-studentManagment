@@ -10,25 +10,19 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Comparator;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-import dominio.Alumno;
 import dominio.Curso;
-import dominio.GestorInstituto;
-import exceptions.PrincipalException;
-import persistencia.PersistenciaDBCurso;
+import dominio.Problema.GestorInstitutoOld;
 
 public class FormVerCursos extends JFrame implements ActionListener {
 
@@ -142,7 +136,7 @@ public class FormVerCursos extends JFrame implements ActionListener {
 	private void cargarDatosTabla() {
 		
 		
-		ArrayList<Curso> cursos = GestorInstituto.getInstancia().getListaCursos();
+		ArrayList<Curso> cursos = GestorInstitutoOld.getInstancia().getListaCursos();
 
 		tableModel.setColumnCount(0);
 		
@@ -197,7 +191,7 @@ private void cargarDatosTabla(ArrayList<Curso> cursos) {
 	
 	
 	private void cargarListadoProfes(JPanel panelInput) {
-		String[] gp = GestorInstituto.getInstancia().obtenerListadoProfes();
+		String[] gp = GestorInstitutoOld.getInstancia().obtenerListadoProfes();
 		for (String profe : gp) {
 			listadoProfe.addItem(profe);
 		}
@@ -212,7 +206,7 @@ private void cargarDatosTabla(ArrayList<Curso> cursos) {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton source = (JButton)e.getSource();
-		GestorInstituto gp = GestorInstituto.getInstancia();
+		GestorInstitutoOld gp = GestorInstitutoOld.getInstancia();
 		
 		//filro profe
 		if (source == btnFiltroProfe) {

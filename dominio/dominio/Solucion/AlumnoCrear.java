@@ -1,4 +1,4 @@
-package dominio;
+package dominio.Solucion;
 import Alumno;
 
 public class AlumnoCrear {
