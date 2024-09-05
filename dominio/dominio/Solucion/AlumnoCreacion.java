@@ -5,6 +5,12 @@ import dominio.Solucion.GestorInstituto;
 import exceptions.*;
 
 public class AlumnoCreacion implements IAlumnoCreacion{
+    private AlumnoValidacionExistente alumnoValidador;
+
+    //Aca se inyect dependencia con la Class ALumnovalidador
+    public AlumnoCreacion(AlumnoValidacionExistente alumnoValidador) {
+        this.alumnoValidador = alumnoValidador;
+    }
 
     //check si realmente es necesario this method
     @Override
@@ -13,9 +19,7 @@ public class AlumnoCreacion implements IAlumnoCreacion{
         try {
             Alumno alumno = new Alumno(nombre, apellido, dni, telefono);
 
-            if (existeAlumno1(alumno, gestor)) {
-                throw new PrincipalException("Ya se encuentra registrado.");
-            }
+            alumnoValidador.validar(alumno, gestor);
             return gestor.listaAlumnos.add(alumno);
 
         }catch (DniInvalidoException e2) {
@@ -33,21 +37,25 @@ public class AlumnoCreacion implements IAlumnoCreacion{
     }
     @Override
     public boolean agregarAlumno(Alumno alumno, GestorInstituto gestor) {
-        if (!existeAlumno1(alumno, gestor)) {
-            //PersistenciaDB.insert(alumno);
-            gestor.listaAlumnos.add(alumno);
-            return true;
+
+        try {
+            alumnoValidador.validar(alumno, gestor);  // Uso de AlumnoValidador para validar
+            return gestor.listaAlumnos.add(alumno);
+        } catch (PrincipalException e) {
+            return false;
         }
 
-        return false;
     }
 
 
+    /*
     private boolean existeAlumno1(Alumno alumno, GestorInstituto gestor) {
         //ArrayList<Alumno> listaAlumnosDB = PersistenciaDB.getAlumnos();
 
         return gestor.listaAlumnos.stream()
                 .anyMatch(a->a.getDni().equals(alumno.getDni()));
     }
+
+     */
 
 }

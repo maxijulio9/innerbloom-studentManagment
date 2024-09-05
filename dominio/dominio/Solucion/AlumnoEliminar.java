@@ -1,6 +1,36 @@
 package dominio.Solucion;
 
-public class AlumnoEliminar {
+import dominio.Alumno;
+import exceptions.PrincipalException;
+import persistencia.PersistenciaDB;
+
+import javax.swing.*;
+
+public class AlumnoEliminar implements IAlumnoEliminacion {
+    @Override
+    public boolean eliminarAlumno(String dni, GestorInstituto gestor) throws PrincipalException {
+
+        for (Alumno alumno : gestor.listaAlumnos) {
+            if (alumno.getDni().equalsIgnoreCase(dni)) {
+
+                int opcion = JOptionPane.showConfirmDialog(
+                        null,
+                        "¿Deseas eliminar " + alumno.getNombre() + " " + alumno.getApellido() + "?",
+                        "Confirmar eliminación",
+                        JOptionPane.YES_NO_OPTION
+                );
+
+                if (opcion == JOptionPane.YES_OPTION) {
+                    gestor.listaAlumnos.remove(alumno.getDni());
+                    //PersistenciaDB.delete(alumno.getDni());
+                    return true;
+                }
+
+            }
+        }
+        throw new PrincipalException("No se encontró al alumno con el DNI ingresado");
+    }
+
 
 
     /*

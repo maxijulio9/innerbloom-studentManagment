@@ -19,8 +19,10 @@ public class GestorInstituto {
 	public String[] listaProfesores = {"Sin definir","Jeff Bezos","Hedy Lamar","Marcos Galperin", "Jorge Tejada","Mark Zuckeberg", "Elon Musk", "Mary Lee Woods"};
 	public ArrayList<Curso> listaCurso;
 
+	//Clases que implementan las interfaces
 	private AlumnoCreacion alumnoCreacion;
-
+	private AlumnoEliminar alumnoEliminacion;
+	private AlumnoGetSorted alumnoGetSorted;
 
 
 	private GestorInstituto() {
@@ -34,6 +36,11 @@ public class GestorInstituto {
 			ge = new GestorInstituto();
 		}
 		return ge;
+	}
+
+	//SOLID - inyecto Dependencia IAlumnoCreacion
+	public GestorInstituto (IAlumnoCreacion alumnoCreacion) {
+		this.alumnoCreacion = (AlumnoCreacion) alumnoCreacion;
 	}
 
 	public ArrayList<Alumno> getListaAlumnos() {
@@ -55,7 +62,7 @@ public class GestorInstituto {
 	
 	//Agregar alumnos ------------------------------
 
-	//Principio S
+	//Principio S y D
 	public boolean agregarAlumnoAlListado(Alumno alumno){
 		return alumnoCreacion.agregarAlumno(alumno, ge);
 
@@ -112,6 +119,41 @@ public class GestorInstituto {
 	}
 	 */
 
+	//Principio S y D
+	public boolean eliminarAlumno(String dni, GestorInstituto ge) throws PrincipalException {
+		return alumnoEliminacion.eliminarAlumno(dni, ge);
+	}
+
+	/*
+	//This is a old method el cual eliminaba el alumno si lo encontraba luego de recorrer.
+	public boolean eliminarAlumno(String dni) throws PrincipalException {
+
+		ArrayList<Alumno> listaAlumnosDB  =  PersistenciaDB.getAlumnos();
+
+		for (Alumno alumno : listaAlumnosDB) {
+			if (alumno.getDni().equalsIgnoreCase(dni)) {
+
+				int opcion = JOptionPane.showConfirmDialog(
+						null,
+						"¿Deseas eliminar " + alumno.getNombre() + " " + alumno.getApellido() + "?",
+						"Confirmar eliminación",
+						JOptionPane.YES_NO_OPTION
+				);
+
+				if (opcion == JOptionPane.YES_OPTION) {
+					PersistenciaDB.delete(alumno.getDni());
+					return true;
+				} else {
+					return false;
+				}
+
+			}
+		}
+		throw new PrincipalException("No se encontró al alumno con el DNI ingresado");
+	}
+
+	 */
+
 	public boolean agregarCurso(Curso curso) throws PrincipalException {
 		if (noExisteCurso1(curso)) {
 			PersistenciaDBCurso.insert(curso);;
@@ -133,32 +175,6 @@ public class GestorInstituto {
 	    return true; // El curso no existe en la lista
 	}
 
-	public boolean eliminarAlumno(String dni) throws PrincipalException {
-		
-		ArrayList<Alumno> listaAlumnosDB  =  PersistenciaDB.getAlumnos();
-		
-		for (Alumno alumno : listaAlumnosDB) {
-			if (alumno.getDni().equalsIgnoreCase(dni)) {
-				
-				 int opcion = JOptionPane.showConfirmDialog(
-			                null,
-			                "¿Deseas eliminar " + alumno.getNombre() + " " + alumno.getApellido() + "?",
-			                "Confirmar eliminación",
-			                JOptionPane.YES_NO_OPTION
-			            );
-
-			     if (opcion == JOptionPane.YES_OPTION) {
-			         PersistenciaDB.delete(alumno.getDni());
-			            return true;
-			     } else {
-			         return false;
-			     }
-				
-			}
-		}
-		throw new PrincipalException("No se encontró al alumno con el DNI ingresado");
-	}
-	
 	public boolean eliminarCurso(String nombreCurso) throws PrincipalException {
 		ArrayList<Curso> listaCurso =  PersistenciaDBCurso.getCursos();
 		ArrayList<Alumno> listaAlumnos = PersistenciaDB.getAlumnos();
@@ -197,7 +213,12 @@ public class GestorInstituto {
 		return this.listaProfesores;
 	}
 
-	
+	//Principio S y D
+	public ArrayList<Alumno> getListadoAlumnosOrdenado(Comparator<Alumno> comparatorAlumno, GestorInstituto ge) throws PrincipalException{
+		return alumnoGetSorted.getListadoAlumnosOrdenado(comparatorAlumno, ge);
+	}
+
+	/*
 	public ArrayList<Alumno> getListadoAlumnosOrdenado(Comparator<Alumno> compa) throws PrincipalException{
 		ArrayList<Alumno> alumnos = PersistenciaDB.getAlumnos();//PersistenciaDB.getListaOrdenadaAlumno(compa);
 
@@ -212,6 +233,9 @@ public class GestorInstituto {
 		return alumnos;
 	}
 
+	 */
+
+
 	public ArrayList<Curso> getListadoCursosOrdenado(Comparator<Curso> compa){
 		ArrayList<Curso> cursos = listaCurso
 				.stream()
@@ -222,16 +246,25 @@ public class GestorInstituto {
 	//devuelve lista filtrada
 	public ArrayList<Curso> getListadoFiltrado(Predicate<Curso> filtro){
 		ArrayList<Curso> listaCursos = PersistenciaDBCurso.getCursos();
-		return listaCursos.stream()
+		return listaCurso.stream()
 				.filter(filtro) 
 				.collect(Collectors.toCollection(ArrayList::new));
 	}
+
+	//	Principio S y D aplicado
+	public ArrayList<Alumno> getListadoFiltradoAlumno(Predicate<Alumno> filtroAlumno, GestorInstituto ge){
+		return getListadoFiltradoAlumno(filtroAlumno, ge);
+	}
+
+	/*
 	public ArrayList<Alumno> getListadoFiltradoAlumno(Predicate<Alumno> filtro){
 		ArrayList<Alumno> listaCursos = PersistenciaDB.getAlumnos();
-		return listaCursos.stream()
+		return listaAlumnos.stream()
 				.filter(filtro) 
 				.collect(Collectors.toCollection(ArrayList::new));
 	}
+
+	 */
 	
 	
 }
