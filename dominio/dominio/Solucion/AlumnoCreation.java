@@ -1,20 +1,20 @@
 package dominio.Solucion;
 
 import dominio.Alumno;
-import dominio.Solucion.GestorInstituto;
 import exceptions.*;
 
-public class AlumnoCreacion implements IAlumnoCreacion{
-    private AlumnoValidacionExistente alumnoValidador;
+public class AlumnoCreation implements IAlumnoCreation {
+    private AlumnoValidationExisting alumnoValidador;
+    //private Alumno alumnoLocal;
 
     //Aca se inyect dependencia con la Class ALumnovalidador
-    public AlumnoCreacion(AlumnoValidacionExistente alumnoValidador) {
+    public AlumnoCreation(AlumnoValidationExisting alumnoValidador) {
         this.alumnoValidador = alumnoValidador;
     }
 
     //check si realmente es necesario this method
     @Override
-    public boolean agregarAlumno(String nombre, String apellido, String dni, String telefono, GestorInstituto gestor) {
+    public boolean addAlumno(String nombre, String apellido, String dni, String telefono, GestorInstituto gestor) {
 
         try {
             Alumno alumno = new Alumno(nombre, apellido, dni, telefono);
@@ -36,7 +36,7 @@ public class AlumnoCreacion implements IAlumnoCreacion{
 
     }
     @Override
-    public boolean agregarAlumno(Alumno alumno, GestorInstituto gestor) {
+    public boolean addAlumno(Alumno alumno, GestorInstituto gestor) {
 
         try {
             alumnoValidador.validar(alumno, gestor);  // Uso de AlumnoValidador para validar

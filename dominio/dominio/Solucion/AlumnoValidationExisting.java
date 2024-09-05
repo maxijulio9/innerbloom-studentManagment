@@ -3,7 +3,7 @@ package dominio.Solucion;
 import dominio.Alumno;
 import exceptions.PrincipalException;
 
-public class AlumnoValidacionExistente {
+public class AlumnoValidationExisting {
 
     public void validar(Alumno alumno, GestorInstituto gestor) throws PrincipalException {
         if (existeAlumno(alumno, gestor)) {

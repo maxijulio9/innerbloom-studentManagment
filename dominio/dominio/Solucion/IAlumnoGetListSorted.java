@@ -6,6 +6,6 @@ import exceptions.PrincipalException;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public interface IAlumnoGetSorted {
+public interface IAlumnoGetListSorted {
     ArrayList<Alumno> getListadoAlumnosOrdenado(Comparator<Alumno> comparatorAlumno, GestorInstituto gestor) throws PrincipalException;
 }

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
-public class AlumnoGetSorted implements IAlumnoGetSorted{
+public class AlumnoGetListSorted implements IAlumnoGetListSorted {
 
     @Override
     public ArrayList<Alumno> getListadoAlumnosOrdenado(Comparator<Alumno> comparatorAlumno, GestorInstituto gestor) throws PrincipalException {

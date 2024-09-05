@@ -2,13 +2,12 @@ package dominio.Solucion;
 
 import dominio.Alumno;
 import exceptions.PrincipalException;
-import persistencia.PersistenciaDB;
 
 import javax.swing.*;
 
-public class AlumnoEliminar implements IAlumnoEliminacion {
+public class AlumnoDelete implements IAlumnoDelete {
     @Override
-    public boolean eliminarAlumno(String dni, GestorInstituto gestor) throws PrincipalException {
+    public boolean deleteAlumno(String dni, GestorInstituto gestor) throws PrincipalException {
 
         for (Alumno alumno : gestor.listaAlumnos) {
             if (alumno.getDni().equalsIgnoreCase(dni)) {
@@ -21,7 +20,7 @@ public class AlumnoEliminar implements IAlumnoEliminacion {
                 );
 
                 if (opcion == JOptionPane.YES_OPTION) {
-                    gestor.listaAlumnos.remove(alumno.getDni());
+                    gestor.listaAlumnos.remove(alumno);
                     //PersistenciaDB.delete(alumno.getDni());
                     return true;
                 }

@@ -6,7 +6,6 @@ import exceptions.*;
 import persistencia.PersistenciaDB;
 import persistencia.PersistenciaDBCurso;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.function.Predicate;
@@ -20,10 +19,10 @@ public class GestorInstituto {
 	public ArrayList<Curso> listaCurso;
 
 	//Clases que implementan las interfaces
-	private AlumnoCreacion alumnoCreacion;
-	private AlumnoEliminar alumnoEliminacion;
-	private AlumnoGetSorted alumnoGetSorted;
-
+	private IAlumnoCreation alumnoCreation;
+	private IAlumnoDelete alumnoDelete;
+	private IAlumnoGetListSorted alumnoGetListSorted;
+	private IAlumnoGetDefaultList alumnosDefaultList;
 
 	private GestorInstituto() {
 		listaAlumnos = new ArrayList<Alumno>();
@@ -39,17 +38,29 @@ public class GestorInstituto {
 	}
 
 	//SOLID - inyecto Dependencia IAlumnoCreacion
-	public GestorInstituto (IAlumnoCreacion alumnoCreacion) {
-		this.alumnoCreacion = (AlumnoCreacion) alumnoCreacion;
+	public GestorInstituto (AlumnoCreation alumnoCreating, IAlumnoDelete alumnoDeleting, IAlumnoGetDefaultList alumnosDefaultList) {
+		this.alumnoCreation = alumnoCreating;
+		this.alumnoDelete =  alumnoDeleting;
+		this.alumnosDefaultList = alumnosDefaultList;
 	}
 
+	//S, O y D principñles applied
+	//but IDK if do this is necessary. ASK
+	public ArrayList<Alumno> getListaAlumnos() {
+
+		return alumnosDefaultList.getListAlumnos();
+	}
+	/*
+	//old
 	public ArrayList<Alumno> getListaAlumnos() {
 		
 		return PersistenciaDB.getAlumnos();
 	}
+	 */
 
-	public void setListaAlumnos(ArrayList<Alumno> listaAlumnos) {
-		this.listaAlumnos = listaAlumnos;
+	public void setListaAlumnos(ArrayList<Alumno> listAlumnos) {
+
+		this.listaAlumnos = listAlumnos;
 	}
 	
 	public ArrayList<Curso> getListaCursos() {
@@ -64,13 +75,14 @@ public class GestorInstituto {
 
 	//Principio S y D
 	public boolean agregarAlumnoAlListado(Alumno alumno){
-		return alumnoCreacion.agregarAlumno(alumno, ge);
+		return alumnoCreation.addAlumno(alumno, ge);
 
 		//return this.listaAlumnos.add(alumno);
 	}
+	//validar como agregar
 	public boolean agregarAlumnoAlListado(String nombre, String apellido, String dni, String telefono) throws PrincipalException {
 		//Alumno alumno =  new Alumno( nombre,  apellido,  dni,  telefono);
-		return alumnoCreacion.agregarAlumno( nombre,  apellido,  dni,  telefono, ge);
+		return alumnoCreation.addAlumno( nombre,  apellido,  dni,  telefono, ge);
 	}
 
 	/*
@@ -121,7 +133,7 @@ public class GestorInstituto {
 
 	//Principio S y D
 	public boolean eliminarAlumno(String dni, GestorInstituto ge) throws PrincipalException {
-		return alumnoEliminacion.eliminarAlumno(dni, ge);
+		return alumnoDelete.deleteAlumno(dni, ge);
 	}
 
 	/*
@@ -215,7 +227,7 @@ public class GestorInstituto {
 
 	//Principio S y D
 	public ArrayList<Alumno> getListadoAlumnosOrdenado(Comparator<Alumno> comparatorAlumno, GestorInstituto ge) throws PrincipalException{
-		return alumnoGetSorted.getListadoAlumnosOrdenado(comparatorAlumno, ge);
+		return alumnoGetListSorted.getListadoAlumnosOrdenado(comparatorAlumno, ge);
 	}
 
 	/*
