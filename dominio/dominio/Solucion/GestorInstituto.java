@@ -18,11 +18,17 @@ public class GestorInstituto {
 	public String[] listaProfesores = {"Sin definir","Jeff Bezos","Hedy Lamar","Marcos Galperin", "Jorge Tejada","Mark Zuckeberg", "Elon Musk", "Mary Lee Woods"};
 	public ArrayList<Curso> listaCurso;
 
-	//Clases que implementan las interfaces
+	//interfaces ALUMNOS
 	private IAlumnoCreation alumnoCreation;
 	private IAlumnoDelete alumnoDelete;
 	private IAlumnoGetListSorted alumnoGetListSorted;
+	private IAlumnoGetFiltered alumnoGetFiltered;
 	private IAlumnoGetDefaultList alumnosDefaultList;
+
+	//interfaces CURSO
+	private ICursoCreation cursoCreation;
+	private ICursoDelete cursoDelete;
+
 
 	private GestorInstituto() {
 		listaAlumnos = new ArrayList<Alumno>();
@@ -37,11 +43,20 @@ public class GestorInstituto {
 		return ge;
 	}
 
-	//SOLID - inyecto Dependencia IAlumnoCreacion
-	public GestorInstituto (AlumnoCreation alumnoCreating, IAlumnoDelete alumnoDeleting, IAlumnoGetDefaultList alumnosDefaultList) {
+	//SOLID - inyecto Dependencias
+	public GestorInstituto (AlumnoCreation alumnoCreating,
+							IAlumnoDelete alumnoDeleting,
+							IAlumnoGetDefaultList alumnosDefaultList,
+							IAlumnoGetFiltered alumnoGetFiltered,
+							IAlumnoGetListSorted alumnoGetListSorted,
+							ICursoCreation cursoCreation, ICursoDelete cursoDelete) {
 		this.alumnoCreation = alumnoCreating;
-		this.alumnoDelete =  alumnoDeleting;
+		this.alumnoDelete = alumnoDeleting;
 		this.alumnosDefaultList = alumnosDefaultList;
+		this.alumnoGetFiltered = alumnoGetFiltered;
+		this.alumnoGetListSorted = alumnoGetListSorted;
+		this.cursoCreation = cursoCreation;
+		this.cursoDelete = cursoDelete;
 	}
 
 	//S, O y D principñles applied
@@ -62,8 +77,9 @@ public class GestorInstituto {
 
 		this.listaAlumnos = listAlumnos;
 	}
-	
-	public ArrayList<Curso> getListaCursos() {
+
+	//here i can change it and use the interface ICuirsoGetdefaultList- later
+	public ArrayList<Curso> getListCursos() {
 		return PersistenciaDBCurso.getCursos();
 	}
 
@@ -166,6 +182,11 @@ public class GestorInstituto {
 
 	 */
 
+	//- -.................CURSOS--------
+	public boolean agregarCurso(Curso curso) throws PrincipalException {
+		return cursoCreation.addCurso(curso);
+	}
+	/*
 	public boolean agregarCurso(Curso curso) throws PrincipalException {
 		if (noExisteCurso1(curso)) {
 			PersistenciaDBCurso.insert(curso);;
@@ -174,9 +195,10 @@ public class GestorInstituto {
 			throw new PrincipalException("El curso ya se encuentra registrado.");
 		}
 	}
-	
-	//Buscar Elementos
 
+	 */
+	/*
+	//Buscar Elementos: old
 	public boolean noExisteCurso1(Curso curso) {
 		ArrayList<Curso> listadoCurso= PersistenciaDBCurso.getCursos();
 	    for (Curso c : listadoCurso) {
@@ -187,6 +209,15 @@ public class GestorInstituto {
 	    return true; // El curso no existe en la lista
 	}
 
+	 */
+
+	public boolean deleteCurso(String nameCurso) throws PrincipalException {
+		return cursoDelete.deleteCurso(nameCurso);
+
+	}
+
+
+	/*
 	public boolean eliminarCurso(String nombreCurso) throws PrincipalException {
 		ArrayList<Curso> listaCurso =  PersistenciaDBCurso.getCursos();
 		ArrayList<Alumno> listaAlumnos = PersistenciaDB.getAlumnos();
@@ -201,6 +232,8 @@ public class GestorInstituto {
 		}
 		throw new PrincipalException("El curso que intentas eliminar tiene alumnos registrados");
 	}
+
+
 	//valida q existe un alumno inscripto en el curso
 	private boolean noContieneAlumnos(ArrayList<Alumno> alumnos, String nombreCurso) {
 		System.out.println("\n - actual >"+ nombreCurso+"<");
@@ -220,7 +253,8 @@ public class GestorInstituto {
 		return true;
 
 	}
-
+*/
+	//Not used
 	public String[] obtenerListadoProfes() {
 		return this.listaProfesores;
 	}
@@ -265,7 +299,8 @@ public class GestorInstituto {
 
 	//	Principio S y D aplicado
 	public ArrayList<Alumno> getListadoFiltradoAlumno(Predicate<Alumno> filtroAlumno, GestorInstituto ge){
-		return getListadoFiltradoAlumno(filtroAlumno, ge);
+		return alumnoGetFiltered.getListadoFiltradoAlumno(filtroAlumno, ge);
+		//return getListadoFiltradoAlumno(filtroAlumno, ge);
 	}
 
 	/*
