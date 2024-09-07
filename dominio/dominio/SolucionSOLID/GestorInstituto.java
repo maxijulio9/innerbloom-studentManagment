@@ -1,16 +1,14 @@
-package dominio.Solucion;
+package dominio.SolucionSOLID;
 
 import dominio.Alumno;
 import dominio.Curso;
-import dominio.Solucion.Alumno.*;
-import dominio.Solucion.Curso.*;
+import dominio.SolucionSOLID.Alumno.*;
+import dominio.SolucionSOLID.Curso.*;
 import exceptions.*;
-import persistencia.PersistenciaDBCurso;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 
 public class GestorInstituto {

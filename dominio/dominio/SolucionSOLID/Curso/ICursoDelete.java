@@ -1,4 +1,4 @@
-package dominio.Solucion.Curso;
+package dominio.SolucionSOLID.Curso;
 
 import exceptions.PrincipalException;
 

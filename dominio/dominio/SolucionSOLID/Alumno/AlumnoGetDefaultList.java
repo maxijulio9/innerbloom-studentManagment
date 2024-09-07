@@ -1,4 +1,4 @@
-package dominio.Solucion.Alumno;
+package dominio.SolucionSOLID.Alumno;
 
 import dominio.Alumno;
 import persistencia.PersistenciaDB;

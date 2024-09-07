@@ -1,7 +1,7 @@
-package dominio.Solucion.Curso;
+package dominio.SolucionSOLID.Curso;
 
 import dominio.Curso;
-import dominio.Solucion.Alumno.IAlumnoGetDefaultList;
+import dominio.SolucionSOLID.Alumno.IAlumnoGetDefaultList;
 import exceptions.PrincipalException;
 import persistencia.PersistenciaDBCurso;
 
