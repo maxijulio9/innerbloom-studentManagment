@@ -2,8 +2,9 @@ package dominio.Solucion;
 
 import dominio.Alumno;
 import dominio.Curso;
+import dominio.Solucion.Alumno.*;
+import dominio.Solucion.Curso.*;
 import exceptions.*;
-import persistencia.PersistenciaDB;
 import persistencia.PersistenciaDBCurso;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 
 
 public class GestorInstituto {
-	private static GestorInstituto ge;
+	private static GestorInstituto gestor;
 	public ArrayList<Alumno> listaAlumnos;
 	public String[] listaProfesores = {"Sin definir","Jeff Bezos","Hedy Lamar","Marcos Galperin", "Jorge Tejada","Mark Zuckeberg", "Elon Musk", "Mary Lee Woods"};
 	public ArrayList<Curso> listaCurso;
@@ -28,8 +29,11 @@ public class GestorInstituto {
 	//interfaces CURSO
 	private ICursoCreation cursoCreation;
 	private ICursoDelete cursoDelete;
+	private ICursoGetSortedList cursoGetSortedList;
+	private ICursoGetFilteredList cursoGetFilteredList;
+	private ICursoGetDefaultList cursoGetDefaultList;
 
-
+	//Old constructor
 	private GestorInstituto() {
 		listaAlumnos = new ArrayList<Alumno>();
 
@@ -37,10 +41,10 @@ public class GestorInstituto {
 	}
 	
 	public static GestorInstituto getInstancia() {
-		if (ge == null) {
-			ge = new GestorInstituto();
+		if (gestor == null) {
+			gestor = new GestorInstituto();
 		}
-		return ge;
+		return gestor;
 	}
 
 	//SOLID - inyecto Dependencias
@@ -49,7 +53,11 @@ public class GestorInstituto {
 							IAlumnoGetDefaultList alumnosDefaultList,
 							IAlumnoGetFiltered alumnoGetFiltered,
 							IAlumnoGetListSorted alumnoGetListSorted,
-							ICursoCreation cursoCreation, ICursoDelete cursoDelete) {
+							ICursoCreation cursoCreation,
+							ICursoDelete cursoDelete,
+							ICursoGetSortedList cursoGetSortedList,
+							ICursoGetFilteredList cursoGetFilteredList,
+							ICursoGetDefaultList cursoGetDefaultList) {
 		this.alumnoCreation = alumnoCreating;
 		this.alumnoDelete = alumnoDeleting;
 		this.alumnosDefaultList = alumnosDefaultList;
@@ -57,12 +65,14 @@ public class GestorInstituto {
 		this.alumnoGetListSorted = alumnoGetListSorted;
 		this.cursoCreation = cursoCreation;
 		this.cursoDelete = cursoDelete;
+		this.cursoGetSortedList = cursoGetSortedList;
+		this.cursoGetFilteredList = cursoGetFilteredList;
+		this.cursoGetDefaultList = cursoGetDefaultList;
 	}
 
 	//S, O y D principñles applied
 	//but IDK if do this is necessary. ASK
-	public ArrayList<Alumno> getListaAlumnos() {
-
+	public ArrayList<Alumno> getAlumnoDefaultList() {
 		return alumnosDefaultList.getListAlumnos();
 	}
 	/*
@@ -79,8 +89,9 @@ public class GestorInstituto {
 	}
 
 	//here i can change it and use the interface ICuirsoGetdefaultList- later
-	public ArrayList<Curso> getListCursos() {
-		return PersistenciaDBCurso.getCursos();
+	public ArrayList<Curso> getCursosDefaultList() {
+		return cursoGetDefaultList.getListCursos();
+		//return PersistenciaDBCurso.getCursos();
 	}
 
 	public void setListaCurso(ArrayList<Curso> listaCurso) {
@@ -90,15 +101,15 @@ public class GestorInstituto {
 	//Agregar alumnos ------------------------------
 
 	//Principio S y D
-	public boolean agregarAlumnoAlListado(Alumno alumno){
-		return alumnoCreation.addAlumno(alumno, ge);
+	public boolean addAlumnoToList(Alumno alumno){
+		return alumnoCreation.addAlumno(alumno, gestor);
 
 		//return this.listaAlumnos.add(alumno);
 	}
 	//validar como agregar
-	public boolean agregarAlumnoAlListado(String nombre, String apellido, String dni, String telefono) throws PrincipalException {
+	public boolean addAlumnoToList(String nombre, String apellido, String dni, String telefono) throws PrincipalException {
 		//Alumno alumno =  new Alumno( nombre,  apellido,  dni,  telefono);
-		return alumnoCreation.addAlumno( nombre,  apellido,  dni,  telefono, ge);
+		return alumnoCreation.addAlumno( nombre,  apellido,  dni,  telefono, gestor);
 	}
 
 	/*
@@ -148,8 +159,8 @@ public class GestorInstituto {
 	 */
 
 	//Principio S y D
-	public boolean eliminarAlumno(String dni, GestorInstituto ge) throws PrincipalException {
-		return alumnoDelete.deleteAlumno(dni, ge);
+	public boolean deleteAlumnoFromList(String dni, GestorInstituto gestor) throws PrincipalException {
+		return alumnoDelete.deleteAlumno(dni, gestor);
 	}
 
 	/*
@@ -183,7 +194,7 @@ public class GestorInstituto {
 	 */
 
 	//- -.................CURSOS--------
-	public boolean agregarCurso(Curso curso) throws PrincipalException {
+	public boolean addCursoToList(Curso curso) throws PrincipalException {
 		return cursoCreation.addCurso(curso);
 	}
 	/*
@@ -211,7 +222,7 @@ public class GestorInstituto {
 
 	 */
 
-	public boolean deleteCurso(String nameCurso) throws PrincipalException {
+	public boolean deleteCursoFromList(String nameCurso) throws PrincipalException {
 		return cursoDelete.deleteCurso(nameCurso);
 
 	}
@@ -260,8 +271,8 @@ public class GestorInstituto {
 	}
 
 	//Principio S y D
-	public ArrayList<Alumno> getListadoAlumnosOrdenado(Comparator<Alumno> comparatorAlumno, GestorInstituto ge) throws PrincipalException{
-		return alumnoGetListSorted.getListadoAlumnosOrdenado(comparatorAlumno, ge);
+	public ArrayList<Alumno> getAlumnosSortedList(Comparator<Alumno> comparatorAlumno, GestorInstituto gestor) throws PrincipalException{
+		return alumnoGetListSorted.getListadoAlumnosOrdenado(comparatorAlumno, gestor);
 	}
 
 	/*
@@ -281,7 +292,11 @@ public class GestorInstituto {
 
 	 */
 
-
+	//Cursos ordenados SOLID -  S y D only
+	public ArrayList<Curso> getCursoSortedList(Comparator<Curso> comparatorSort){
+		return cursoGetSortedList.getCursosSortedByComparator(comparatorSort, this.listaCurso);
+	}
+	/*
 	public ArrayList<Curso> getListadoCursosOrdenado(Comparator<Curso> compa){
 		ArrayList<Curso> cursos = listaCurso
 				.stream()
@@ -289,6 +304,14 @@ public class GestorInstituto {
 				.collect(Collectors.toCollection(ArrayList<Curso>::new));
 		return cursos;
 	}
+
+	 */
+
+	//Cursos filtrados SOLID -  S y D only
+	public ArrayList<Curso> getCursoFilteredList(Predicate<Curso> filterCurso){
+		return cursoGetFilteredList.getListadoFiltrado(filterCurso, this.listaCurso);
+	}
+	/*
 	//devuelve lista filtrada
 	public ArrayList<Curso> getListadoFiltrado(Predicate<Curso> filtro){
 		ArrayList<Curso> listaCursos = PersistenciaDBCurso.getCursos();
@@ -297,9 +320,11 @@ public class GestorInstituto {
 				.collect(Collectors.toCollection(ArrayList::new));
 	}
 
+	 */
+
 	//	Principio S y D aplicado
-	public ArrayList<Alumno> getListadoFiltradoAlumno(Predicate<Alumno> filtroAlumno, GestorInstituto ge){
-		return alumnoGetFiltered.getListadoFiltradoAlumno(filtroAlumno, ge);
+	public ArrayList<Alumno> getAlumnoFilteredList(Predicate<Alumno> filtroAlumno, GestorInstituto gestor){
+		return alumnoGetFiltered.getListadoFiltradoAlumno(filtroAlumno, gestor);
 		//return getListadoFiltradoAlumno(filtroAlumno, ge);
 	}
 

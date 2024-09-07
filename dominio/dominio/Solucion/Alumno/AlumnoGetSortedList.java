@@ -1,13 +1,14 @@
-package dominio.Solucion;
+package dominio.Solucion.Alumno;
 
 import dominio.Alumno;
+import dominio.Solucion.GestorInstituto;
 import exceptions.PrincipalException;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
-public class AlumnoGetListSorted implements IAlumnoGetListSorted {
+public class AlumnoGetSortedList implements IAlumnoGetListSorted {
 
     @Override
     public ArrayList<Alumno> getListadoAlumnosOrdenado(Comparator<Alumno> comparatorAlumno, GestorInstituto gestor) throws PrincipalException {

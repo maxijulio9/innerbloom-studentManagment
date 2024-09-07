@@ -1,12 +1,13 @@
-package dominio.Solucion;
+package dominio.Solucion.Alumno;
 
 import dominio.Alumno;
+import dominio.Solucion.GestorInstituto;
 
 import java.util.ArrayList;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class AlumnoGetListFiltered implements IAlumnoGetFiltered{
+public class AlumnoGetFilteredList implements IAlumnoGetFiltered {
 
     //validar si es utilizado.--
     @Override

@@ -1,5 +1,6 @@
-package dominio.Solucion;
+package dominio.Solucion.Alumno;
 
+import dominio.Solucion.GestorInstituto;
 import exceptions.PrincipalException;
 
 public interface IAlumnoDelete {

@@ -1,4 +1,4 @@
-package dominio.Solucion;
+package dominio.Solucion.Curso;
 
 import dominio.Alumno;
 

@@ -1,6 +1,7 @@
-package dominio.Solucion;
+package dominio.Solucion.Alumno;
 
 import dominio.Alumno;
+import dominio.Solucion.GestorInstituto;
 import exceptions.PrincipalException;
 
 public class AlumnoValidationExisting {

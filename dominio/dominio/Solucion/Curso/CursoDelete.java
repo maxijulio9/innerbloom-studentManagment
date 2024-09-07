@@ -1,10 +1,11 @@
-package dominio.Solucion;
+package dominio.Solucion.Curso;
 
 import dominio.Curso;
+import dominio.Solucion.Alumno.IAlumnoGetDefaultList;
 import exceptions.PrincipalException;
 import persistencia.PersistenciaDBCurso;
 
-public class CursoDelete implements ICursoDelete{
+public class CursoDelete implements ICursoDelete {
     private ICursoGetDefaultList cursoList;
     private IAlumnoGetDefaultList alumnoList;
     private CursoValidateExistenceAlumno cursoHasAlumno;

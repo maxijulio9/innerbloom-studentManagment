@@ -1,6 +1,7 @@
-package dominio.Solucion;
+package dominio.Solucion.Alumno;
 
 import dominio.Alumno;
+import dominio.Solucion.GestorInstituto;
 
 import java.util.ArrayList;
 import java.util.function.Predicate;

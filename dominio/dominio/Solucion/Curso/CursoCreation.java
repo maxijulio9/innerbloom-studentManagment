@@ -1,9 +1,9 @@
-package dominio.Solucion;
+package dominio.Solucion.Curso;
 
 import dominio.Curso;
 import exceptions.PrincipalException;
 
-public class CursoCreation implements ICursoCreation{
+public class CursoCreation implements ICursoCreation {
 
     private CursoValidationExisting cursoValidator;
     //add dependecies validaatorL
