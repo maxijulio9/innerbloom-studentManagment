@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 
 import dominio.Conexion;
 import dominio.Problema.GestorInstitutoOld;
+import dominio.SolucionSOLID.GestorInstituto;
 import exceptions.DniInvalidoException;
 import exceptions.PrincipalException;
 
@@ -116,7 +117,8 @@ public class FormEliminarAlumno extends JFrame implements ActionListener{
 		Connection cn = null;
 
 		if (source == btnAceptar) {
-			GestorInstitutoOld gp = GestorInstitutoOld.getInstancia();
+			//GestorInstitutoOld gp = GestorInstitutoOld.getInstancia();
+			GestorInstituto gp = GestorInstituto.getInstancia();
 			if (txtDni.getText() == "") {
 				JOptionPane.showMessageDialog(this, "Ingresá el DNI.", "Se produjo un error",
 						JOptionPane.ERROR_MESSAGE);
@@ -124,8 +126,8 @@ public class FormEliminarAlumno extends JFrame implements ActionListener{
 
 				
 				try {
-					boolean seElimino = gp.eliminarAlumno(txtDni.getText().trim());
-					if (seElimino) {
+					boolean isDeleted = gp.deleteAlumnoFromList(txtDni.getText().trim());
+					if (isDeleted) {
 						txtDni.setText("");
 						JOptionPane.showMessageDialog(this, "Se eliminó el alumno correctamente.",
 								"Operación finalizada", JOptionPane.INFORMATION_MESSAGE);

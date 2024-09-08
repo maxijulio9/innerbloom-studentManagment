@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 
 import dominio.Curso;
 import dominio.Problema.GestorInstitutoOld;
+import dominio.SolucionSOLID.GestorInstituto;
 import exceptions.CantidadAlumnosException;
 import exceptions.CantidadHorasException;
 import exceptions.NivelVacioException;
@@ -162,7 +163,9 @@ public class FormCrearCurso extends JFrame implements ActionListener {
 		JButton source = (JButton) e.getSource();
 
 		if (source == btnAceptar) {
-			GestorInstitutoOld gp = GestorInstitutoOld.getInstancia();
+			//GestorInstitutoOld gp = GestorInstitutoOld.getInstancia();
+			GestorInstituto gp = GestorInstituto.getInstancia();
+
 			try {
 				txtNombre.setBackground(Color.WHITE);
 				txtCargaHoraria.setBackground(Color.WHITE);
@@ -173,8 +176,9 @@ public class FormCrearCurso extends JFrame implements ActionListener {
 				Curso cursoAux = new Curso(txtNombre.getText(), niveles.getSelectedItem().toString(),txtCargaHoraria.getText(),
 						txtVacantes.getText(), listadoProfes.getSelectedItem().toString());
 				try {
-					boolean seCreoCurso = gp.agregarCurso(cursoAux);
-					if (seCreoCurso) {
+					//boolean seCreoCurso = gp.agregarCurso(cursoAux);
+					boolean cursoCreated = gp.addCursoToList(cursoAux);
+					if (cursoCreated) {
 //						PersistenciaDBCurso.insert(cursoAux);
 						JOptionPane.showMessageDialog(this, "¡Nuevo curso registrado, que alegría crecer!",
 								"Operación confirmada", JOptionPane.INFORMATION_MESSAGE);

@@ -20,6 +20,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import dominio.Alumno;
+import dominio.SolucionSOLID.Alumno.AlumnoGetDefaultList;
+import dominio.SolucionSOLID.Alumno.IAlumnoGetDefaultList;
 import exceptions.ApellidoVacioException;
 import exceptions.NombreVacioException;
 import exceptions.PrincipalException;
@@ -137,8 +139,11 @@ public class FormModificarAlumno extends JFrame implements ActionListener{
 	}
 	
 	private void cargarListaAlumno(JPanel panelInput) {
-		ArrayList<Alumno> gp = PersistenciaDB.getAlumnos();
-		for (Alumno a : gp){
+		//ArrayList<Alumno> gp = PersistenciaDB.getAlumnos();
+		//SOLID? ?? idk
+		IAlumnoGetDefaultList gp = new AlumnoGetDefaultList();
+
+		for (Alumno a : gp.getListAlumnos()){
 			listadoDNIAlumno.addItem(a.getDni()+" - "+a.getNombre()+" "+a.getApellido());
 		}
 		listadoDNIAlumno.addActionListener(this);
@@ -151,11 +156,12 @@ public class FormModificarAlumno extends JFrame implements ActionListener{
 		txtTelefono.setText("");	
 	}
 	private void cargarDatosAlumno(String alumnoSeleccionado) {
-		ArrayList<Alumno> alumnos = PersistenciaDB.getAlumnos();
+		//ArrayList<Alumno> alumnos = PersistenciaDB.getAlumnos();
+		IAlumnoGetDefaultList alumnos = new AlumnoGetDefaultList();
 		String[] partes = alumnoSeleccionado.split("-"); // Suponiendo que el guión separa el nombre y el DNI
 		String dniSeleccionado = partes[0].trim(); // Tomamos la última parte como el DNI
 
-		for (Alumno alumno : alumnos) {
+		for (Alumno alumno : alumnos.getListAlumnos()) {
 //			System.out.println(alumno.toString());
 			if (alumno.getDni().equals(dniSeleccionado)) {
 				txtNombre.setText(alumno.getNombre());

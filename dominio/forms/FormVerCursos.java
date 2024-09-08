@@ -23,6 +23,7 @@ import javax.swing.table.DefaultTableModel;
 
 import dominio.Curso;
 import dominio.Problema.GestorInstitutoOld;
+import dominio.SolucionSOLID.GestorInstituto;
 
 public class FormVerCursos extends JFrame implements ActionListener {
 
@@ -136,7 +137,9 @@ public class FormVerCursos extends JFrame implements ActionListener {
 	private void cargarDatosTabla() {
 		
 		
-		ArrayList<Curso> cursos = GestorInstitutoOld.getInstancia().getListaCursos();
+		//ArrayList<Curso> cursos = GestorInstitutoOld.getInstancia().getListaCursos();
+		ArrayList<Curso> cursos = GestorInstituto.getInstancia().getCursosDefaultList();
+
 
 		tableModel.setColumnCount(0);
 		
@@ -206,18 +209,24 @@ private void cargarDatosTabla(ArrayList<Curso> cursos) {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton source = (JButton)e.getSource();
-		GestorInstitutoOld gp = GestorInstitutoOld.getInstancia();
-		
+		//GestorInstitutoOld gp = GestorInstitutoOld.getInstancia();
+		GestorInstituto gp = GestorInstituto.getInstancia();
+
+
 		//filro profe
 		if (source == btnFiltroProfe) {
-			ArrayList<Curso> cursos = gp.getListadoFiltrado(c->c.getProfesorAsignado().equals(listadoProfe.getSelectedItem().toString()));
+			//ArrayList<Curso> cursos = gp.getListadoFiltrado(c->c.getProfesorAsignado().equals(listadoProfe.getSelectedItem().toString()));
+			ArrayList<Curso> cursos = gp.getCursoFilteredList(c->c.getProfesorAsignado().equals(listadoProfe.getSelectedItem().toString()));
+
 
 			cargarDatosTabla(cursos);
 			 
 		}
 		//filtro nivel
 		if (source == btnFiltroNivel) {
-			ArrayList<Curso> cursos = gp.getListadoFiltrado(c->c.getNivel().equals(listadoNivel.getSelectedItem().toString()));
+			//ArrayList<Curso> cursos = gp.getListadoFiltrado(c->c.getNivel().equals(listadoNivel.getSelectedItem().toString()));
+			ArrayList<Curso> cursos = gp.getCursoFilteredList(c->c.getNivel().equals(listadoNivel.getSelectedItem().toString()));
+
 			cargarDatosTabla(cursos);
 		}
 		if (source == btnVerTodo) {

@@ -23,6 +23,7 @@ import javax.swing.SwingConstants;
 
 import dominio.Alumno;
 import dominio.Problema.GestorInstitutoOld;
+import dominio.SolucionSOLID.GestorInstituto;
 import exceptions.ApellidoVacioException;
 import exceptions.DniInvalidoException;
 import exceptions.NombreVacioException;
@@ -144,15 +145,17 @@ public class FormCargarAlumno extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		JButton source = (JButton) e.getSource();
 		if (source ==  btnAceptar) {
-			GestorInstitutoOld gp = GestorInstitutoOld.getInstancia();
-			
+			//GestorInstitutoOld gp = GestorInstitutoOld.getInstancia();
+
+			GestorInstituto gp = GestorInstituto.getInstancia();
+
 			try {
 				txtNombre.setBackground(Color.WHITE);
 				txtDNI.setBackground(Color.WHITE);
 				txtApellido.setBackground(Color.WHITE);
 				
 				Alumno alumnoAux = new Alumno(txtNombre.getText(), txtApellido.getText(), txtDNI.getText(), txtTelefono.getText(),getFechaGregoriana());
-				boolean seAgrego = gp.agregarAlumno(alumnoAux);
+				boolean seAgrego = gp.addAlumnoToList(alumnoAux);
 				if (seAgrego) {
 					JOptionPane.showMessageDialog(this, "¡Alumno registrado correctamente!");
 					dispose();

@@ -120,6 +120,7 @@ public class FormEliminarAlumnoDeCurso extends JFrame implements ActionListener{
 
 		for (Alumno alumno : alumnos) {
 			if (alumno.getDni().equals(dniSeleccionado)) {
+				//posible mejora
 				String[] cursosInscriptos = PersistenciaDB.getCursosInscriptosDB(dniSeleccionado).split(", ");
 				for (String curso : cursosInscriptos) {
 					if (!curso.equals("Sin cursos") && !curso.trim().isEmpty()) {

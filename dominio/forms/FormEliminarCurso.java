@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 
 import dominio.Curso;
 import dominio.Problema.GestorInstitutoOld;
+import dominio.SolucionSOLID.GestorInstituto;
 
 public class FormEliminarCurso extends JFrame implements ActionListener{
 
@@ -117,15 +118,18 @@ public class FormEliminarCurso extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 
 		JButton source = (JButton) e.getSource();
-		GestorInstitutoOld gp = GestorInstitutoOld.getInstancia();
+		//GestorInstitutoOld gp = GestorInstitutoOld.getInstancia();
+		GestorInstituto gp = GestorInstituto.getInstancia();
+
 		if (source == btnAceptar) {
 			if (listadoCursos.getSelectedItem() == null) {
 				JOptionPane.showMessageDialog(this, "Por favor seleccioná el curso que querés eliminar", "Datos incorrectos",
 						JOptionPane.ERROR_MESSAGE);
 			} else {
 				try {
-					 boolean seElimino = gp.eliminarCurso(listadoCursos.getSelectedItem().toString().trim());
-					 if (seElimino) {
+					//boolean seElimino = gp.eliminarCurso(listadoCursos.getSelectedItem().toString().trim());
+					boolean cursoDeleted = gp.deleteCursoFromList(listadoCursos.getSelectedItem().toString().trim());
+					if (cursoDeleted) {
 						 JOptionPane.showMessageDialog(this, "Curso eliminado",
 									"Proceso finalizado", JOptionPane.INFORMATION_MESSAGE);
 					}

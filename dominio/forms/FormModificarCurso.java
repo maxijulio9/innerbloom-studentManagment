@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 
 import dominio.Curso;
 import dominio.Problema.GestorInstitutoOld;
+import dominio.SolucionSOLID.GestorInstituto;
 import exceptions.CantidadAlumnosException;
 import exceptions.CantidadHorasException;
 import exceptions.NivelVacioException;
@@ -199,9 +200,14 @@ public class FormModificarCurso extends JFrame implements ActionListener{
 		Object source =  e.getSource();
 		
 		if (source == btnAceptar) {
-			GestorInstitutoOld gp = GestorInstitutoOld.getInstancia();
-			ArrayList<Curso> cursos = gp.getListaCursos();
-	
+			//GestorInstitutoOld gp = GestorInstitutoOld.getInstancia();
+			GestorInstituto gp = GestorInstituto.getInstancia();
+
+			//Mejora SOLID
+			//ArrayList<Curso> cursos = gp.getListaCursos();
+			ArrayList<Curso> cursos = gp.getCursosDefaultList();
+
+
 
 			if (listadoCursos.getSelectedItem()==null) {
 				JOptionPane.showMessageDialog(this, "Por favor seleccioná Curso que querés modificar.","No se pudo completar la operación"
@@ -220,7 +226,7 @@ public class FormModificarCurso extends JFrame implements ActionListener{
 			                cursoNew.setCantidadAlumnos(curso.getCantidadAlumnos());
 			                cursoNew.setProfesorAsignado(curso.getProfesorAsignado());
 			                
-			                boolean seModifico = validarDatosIngresados(cursoNew);
+			                boolean cursoModified = validarDatosIngresados(cursoNew);
 			                /*
 			                try {
 			                    if (!txtNombre.getText().isEmpty()) {
@@ -270,7 +276,7 @@ public class FormModificarCurso extends JFrame implements ActionListener{
 										"Operación finalizada", JOptionPane.ERROR_MESSAGE);
 							}
 							*/
-			                if (seModifico) {
+			                if (cursoModified) {
 								PersistenciaDBCurso.update(curso, cursoNew);
 								//JOptionPane.showMessageDialog(this, "Proceso finalizado. Cambios guardados.",
 									//	"Operación finalizada", JOptionPane.INFORMATION_MESSAGE);

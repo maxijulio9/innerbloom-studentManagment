@@ -24,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 
 import dominio.Alumno;
 import dominio.Problema.GestorInstitutoOld;
+import dominio.SolucionSOLID.GestorInstituto;
 import exceptions.PrincipalException;
 
 public class FormVerAlumnos extends JFrame implements ActionListener{
@@ -183,13 +184,17 @@ public class FormVerAlumnos extends JFrame implements ActionListener{
 		// TODO Auto-generated method stub
 //		JButton source = (JButton)e.getSource();
 		Object source =  e.getSource();
-		GestorInstitutoOld gp = GestorInstitutoOld.getInstancia();
+		//GestorInstitutoOld gp = GestorInstitutoOld.getInstancia();
+		GestorInstituto gp = GestorInstituto.getInstancia();
+
 		ArrayList<Alumno> alumnos = null;
+
 		if (source == btnOrdApellido) {
 			
 			try {
-				alumnos = gp.getListadoAlumnosOrdenado(new Comparator<Alumno>() {
-							@Override
+				//alumnos = gp.getListadoAlumnosOrdenado(new Comparator<Alumno>() {
+				alumnos = gp.getAlumnosSortedList(new Comparator<Alumno>() {
+					@Override
 							public int compare(Alumno a1, Alumno a2) {
 								return (a1.compareTo(a2));
 							}
@@ -200,12 +205,14 @@ public class FormVerAlumnos extends JFrame implements ActionListener{
 			}
 			cargarDatosTablaInicial(alumnos);
 		}
-		
+
+		//Sort by dni
 		if (source == btnOrdDNI) {
 			
 			try {
-				alumnos=  gp.getListadoAlumnosOrdenado(new Comparator<Alumno>() {
-								@Override
+				//alumnos=  gp.getListadoAlumnosOrdenado(new Comparator<Alumno>() {
+				alumnos=  gp.getAlumnosSortedList(new Comparator<Alumno>() {
+					@Override
 								public int compare(Alumno a1, Alumno a2) {
 									return (Integer.parseInt(a1.getDni()) - Integer.parseInt(a2.getDni()));
 								}
@@ -217,7 +224,8 @@ public class FormVerAlumnos extends JFrame implements ActionListener{
 			cargarDatosTablaInicial(alumnos);
 		}
 		if (source  == btnVerTodo) {
-			alumnos = gp.getListaAlumnos();
+			//alumnos = gp.getListaAlumnos();
+			alumnos = gp.getAlumnoDefaultList();
 			cargarDatosTablaInicial(alumnos);
 		}
 		if (source  == btnVolver) {
@@ -228,18 +236,21 @@ public class FormVerAlumnos extends JFrame implements ActionListener{
 			System.out.println("Muestrame los alumnos");
 			 if (filtroSinCursos.isSelected()) {
 	                // Si el filtro está seleccionado, muestra solo los alumnos sin cursos
-	                alumnos = gp.getListadoFiltradoAlumno(a->a.getCursosNombre().contains("Sin cursos"));
-	            } else {
+	                //alumnos = gp.getListadoFiltradoAlumno(a->a.getCursosNombre().contains("Sin cursos"));
+					 alumnos = gp.getAlumnoFilteredList(a->a.getCursosNombre().contains("Sin cursos"));
+			 } else {
 	                // Si el filtro no está seleccionado, muestra la lista original de alumnos
-	            	alumnos = gp.getListaAlumnos();
-	          }
+	            	//alumnos = gp.getListaAlumnos();
+					alumnos = gp.getAlumnoDefaultList();
+			 }
 			
 
 			cargarDatosTablaInicial(alumnos);
 		}
 		if (source == busquedaAlumno) {
 			System.out.println("I'm writting");
-            alumnos = gp.getListadoFiltradoAlumno(a->a.getApellido().toLowerCase().contains(busquedaAlumno.getText().toLowerCase()));
+           	//alumnos = gp.getListadoFiltradoAlumno(a->a.getApellido().toLowerCase().contains(busquedaAlumno.getText().toLowerCase()));
+			alumnos = gp.getAlumnoFilteredList(a->a.getApellido().toLowerCase().contains(busquedaAlumno.getText().toLowerCase()));
             cargarDatosTablaInicial(alumnos);
 		}
 		

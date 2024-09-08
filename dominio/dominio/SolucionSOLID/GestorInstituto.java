@@ -81,9 +81,9 @@ public class GestorInstituto {
 	}
 	 */
 
-	public void setListaAlumnos(ArrayList<Alumno> listAlumnos) {
-
-		this.listaAlumnos = listAlumnos;
+	public void setListAlumnos(ArrayList<Alumno> listAlumnos) {
+		this.listaAlumnos = getAlumnoDefaultList();
+		//this.listaAlumnos = listAlumnos;
 	}
 
 	//here i can change it and use the interface ICuirsoGetdefaultList- later
@@ -92,8 +92,9 @@ public class GestorInstituto {
 		//return PersistenciaDBCurso.getCursos();
 	}
 
-	public void setListaCurso(ArrayList<Curso> listaCurso) {
-		this.listaCurso = listaCurso;
+	public void setListCurso(ArrayList<Curso> listaCurso) {
+		this.listaCurso = getCursosDefaultList();
+		//this.listaCurso = listaCurso;
 	}
 	
 	//Agregar alumnos ------------------------------
@@ -157,7 +158,7 @@ public class GestorInstituto {
 	 */
 
 	//Principio S y D
-	public boolean deleteAlumnoFromList(String dni, GestorInstituto gestor) throws PrincipalException {
+	public boolean deleteAlumnoFromList(String dni) throws PrincipalException {
 		return alumnoDelete.deleteAlumno(dni, gestor);
 	}
 
@@ -269,7 +270,7 @@ public class GestorInstituto {
 	}
 
 	//Principio S y D
-	public ArrayList<Alumno> getAlumnosSortedList(Comparator<Alumno> comparatorAlumno, GestorInstituto gestor) throws PrincipalException{
+	public ArrayList<Alumno> getAlumnosSortedList(Comparator<Alumno> comparatorAlumno) throws PrincipalException{
 		return alumnoGetListSorted.getListadoAlumnosOrdenado(comparatorAlumno, gestor);
 	}
 
@@ -321,7 +322,7 @@ public class GestorInstituto {
 	 */
 
 	//	Principio S y D aplicado
-	public ArrayList<Alumno> getAlumnoFilteredList(Predicate<Alumno> filtroAlumno, GestorInstituto gestor){
+	public ArrayList<Alumno> getAlumnoFilteredList(Predicate<Alumno> filtroAlumno){
 		return alumnoGetFiltered.getListadoFiltradoAlumno(filtroAlumno, gestor);
 		//return getListadoFiltradoAlumno(filtroAlumno, ge);
 	}
