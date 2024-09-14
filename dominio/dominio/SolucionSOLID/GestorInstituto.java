@@ -69,7 +69,7 @@ public class GestorInstituto {
 	}
 
 	//S, O y D principñles applied
-	//but IDK if do this is necessary. ASK
+	//but IDK if do this is necessary.
 	public ArrayList<Alumno> getAlumnoDefaultList() {
 		return alumnosDefaultList.getListAlumnos();
 	}

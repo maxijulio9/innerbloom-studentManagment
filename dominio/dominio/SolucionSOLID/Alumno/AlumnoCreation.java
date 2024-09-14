@@ -23,15 +23,7 @@ public class AlumnoCreation implements IAlumnoCreation {
             alumnoValidador.validar(alumno, gestor);
             return gestor.listaAlumnos.add(alumno);
 
-        }catch (DniInvalidoException e2) {
-            return false;
-        }catch (NombreVacioException e2) {
-            return false;
-        }catch (ApellidoVacioException e2) {
-            return false;
-        }catch (TelefonoInvalidoException e2) {
-            return false;
-        }catch (PrincipalException e) {
+        } catch (PrincipalException e) {
             return false;
         }
 
