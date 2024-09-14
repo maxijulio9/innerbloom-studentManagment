@@ -10,25 +10,20 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Comparator;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-import dominio.Alumno;
 import dominio.Curso;
-import dominio.GestorInstituto;
-import exceptions.PrincipalException;
-import persistencia.PersistenciaDBCurso;
+import dominio.Problema.GestorInstitutoOld;
+import dominio.SolucionSOLID.GestorInstituto;
 
 public class FormVerCursos extends JFrame implements ActionListener {
 
@@ -142,7 +137,9 @@ public class FormVerCursos extends JFrame implements ActionListener {
 	private void cargarDatosTabla() {
 		
 		
-		ArrayList<Curso> cursos = GestorInstituto.getInstancia().getListaCursos();
+		//ArrayList<Curso> cursos = GestorInstitutoOld.getInstancia().getListaCursos();
+		ArrayList<Curso> cursos = GestorInstituto.getInstancia().getCursosDefaultList();
+
 
 		tableModel.setColumnCount(0);
 		
@@ -197,7 +194,7 @@ private void cargarDatosTabla(ArrayList<Curso> cursos) {
 	
 	
 	private void cargarListadoProfes(JPanel panelInput) {
-		String[] gp = GestorInstituto.getInstancia().obtenerListadoProfes();
+		String[] gp = GestorInstitutoOld.getInstancia().obtenerListadoProfes();
 		for (String profe : gp) {
 			listadoProfe.addItem(profe);
 		}
@@ -212,18 +209,24 @@ private void cargarDatosTabla(ArrayList<Curso> cursos) {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton source = (JButton)e.getSource();
+		//GestorInstitutoOld gp = GestorInstitutoOld.getInstancia();
 		GestorInstituto gp = GestorInstituto.getInstancia();
-		
+
+
 		//filro profe
 		if (source == btnFiltroProfe) {
-			ArrayList<Curso> cursos = gp.getListadoFiltrado(c->c.getProfesorAsignado().equals(listadoProfe.getSelectedItem().toString()));
+			//ArrayList<Curso> cursos = gp.getListadoFiltrado(c->c.getProfesorAsignado().equals(listadoProfe.getSelectedItem().toString()));
+			ArrayList<Curso> cursos = gp.getCursoFilteredList(c->c.getProfesorAsignado().equals(listadoProfe.getSelectedItem().toString()));
+
 
 			cargarDatosTabla(cursos);
 			 
 		}
 		//filtro nivel
 		if (source == btnFiltroNivel) {
-			ArrayList<Curso> cursos = gp.getListadoFiltrado(c->c.getNivel().equals(listadoNivel.getSelectedItem().toString()));
+			//ArrayList<Curso> cursos = gp.getListadoFiltrado(c->c.getNivel().equals(listadoNivel.getSelectedItem().toString()));
+			ArrayList<Curso> cursos = gp.getCursoFilteredList(c->c.getNivel().equals(listadoNivel.getSelectedItem().toString()));
+
 			cargarDatosTabla(cursos);
 		}
 		if (source == btnVerTodo) {

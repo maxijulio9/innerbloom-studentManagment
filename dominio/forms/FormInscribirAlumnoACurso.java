@@ -17,12 +17,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import dominio.Alumno;
 import dominio.Curso;
-import dominio.GestorInstituto;
+import dominio.Problema.GestorInstitutoOld;
 import dominio.Matricula;
+import dominio.SolucionSOLID.GestorInstituto;
 import exceptions.MatriculaExistenteException;
 import exceptions.PrincipalException;
 import persistencia.PersistenciaDB;
@@ -142,9 +142,14 @@ public class FormInscribirAlumnoACurso extends JFrame implements ActionListener{
 		JButton source = (JButton)e.getSource();
 
 		if (source == btnAceptar) {
+			//GestorInstitutoOld gp = GestorInstitutoOld.getInstancia();
 			GestorInstituto gp = GestorInstituto.getInstancia();
-			ArrayList<Curso> cursos = gp.getListaCursos();//PersistenciaDBCurso.getCursos();
-			ArrayList<Alumno> alumnos = gp.getListaAlumnos();
+
+			//ArrayList<Curso> cursos = gp.getListaCursos();//PersistenciaDBCurso.getCursos();
+			ArrayList<Curso> cursos = gp.getCursosDefaultList();//PersistenciaDBCurso.getCursos();
+
+			//ArrayList<Alumno> alumnos = gp.getListaAlumnos();
+			ArrayList<Alumno> alumnos = gp.getAlumnoDefaultList();
 			
 			if (listadoDNIAlumno.getSelectedItem()==null) {
 				JOptionPane.showMessageDialog(this, "Por favor seleccioná el DNI del alumno.","No se pudo completar la operación"
@@ -205,9 +210,7 @@ public class FormInscribirAlumnoACurso extends JFrame implements ActionListener{
 			
 			
 		}
-//		if (source == btnCancelar) {
-//			dispose();	
-//		}
+
 		if (source == btnVolver) {
 			dispose();
 		}

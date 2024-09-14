@@ -1,20 +1,11 @@
 package dominio;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Comparator;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
 import java.util.Objects;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
-import javax.swing.text.StyledEditorKit.ForegroundAction;
 
 import exceptions.MatriculaExistenteException;
-import exceptions.NoExisteLaMatriculaException;
 import exceptions.PrincipalException;
-import exceptions.SinCursosException;
 import persistencia.PersistenciaDB;
 
 

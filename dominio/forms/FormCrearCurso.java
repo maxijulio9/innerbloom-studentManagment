@@ -9,7 +9,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Iterator;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -17,18 +16,16 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 
 import dominio.Curso;
-import dominio.GestorInstituto;
+import dominio.Problema.GestorInstitutoOld;
+import dominio.SolucionSOLID.GestorInstituto;
 import exceptions.CantidadAlumnosException;
 import exceptions.CantidadHorasException;
 import exceptions.NivelVacioException;
 import exceptions.NombreVacioException;
 import exceptions.PrincipalException;
-import persistencia.PersistenciaDBCurso;
 
 public class FormCrearCurso extends JFrame implements ActionListener {
 	
@@ -142,7 +139,7 @@ public class FormCrearCurso extends JFrame implements ActionListener {
 	}
 	
 	private void cargarListadoProfes(JPanel panelInput) {
-		String[] gp = GestorInstituto.getInstancia().obtenerListadoProfes();
+		String[] gp = GestorInstitutoOld.getInstancia().obtenerListadoProfes();
 		for (String profe : gp) {
 			listadoProfes.addItem(profe);
 		}
@@ -166,7 +163,9 @@ public class FormCrearCurso extends JFrame implements ActionListener {
 		JButton source = (JButton) e.getSource();
 
 		if (source == btnAceptar) {
+			//GestorInstitutoOld gp = GestorInstitutoOld.getInstancia();
 			GestorInstituto gp = GestorInstituto.getInstancia();
+
 			try {
 				txtNombre.setBackground(Color.WHITE);
 				txtCargaHoraria.setBackground(Color.WHITE);
@@ -177,8 +176,9 @@ public class FormCrearCurso extends JFrame implements ActionListener {
 				Curso cursoAux = new Curso(txtNombre.getText(), niveles.getSelectedItem().toString(),txtCargaHoraria.getText(),
 						txtVacantes.getText(), listadoProfes.getSelectedItem().toString());
 				try {
-					boolean seCreoCurso = gp.agregarCurso(cursoAux);
-					if (seCreoCurso) {
+					//boolean seCreoCurso = gp.agregarCurso(cursoAux);
+					boolean cursoCreated = gp.addCursoToList(cursoAux);
+					if (cursoCreated) {
 //						PersistenciaDBCurso.insert(cursoAux);
 						JOptionPane.showMessageDialog(this, "¡Nuevo curso registrado, que alegría crecer!",
 								"Operación confirmada", JOptionPane.INFORMATION_MESSAGE);

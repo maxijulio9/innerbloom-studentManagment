@@ -6,16 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 import javax.swing.JOptionPane;
 
 
 import dominio.Alumno;
 import dominio.Conexion;
-import exceptions.PrincipalException;
 
 public class PersistenciaDB {
 

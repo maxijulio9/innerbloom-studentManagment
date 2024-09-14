@@ -11,7 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +23,7 @@ import javax.swing.JPanel;
 
 import dominio.Alumno;
 import dominio.Curso;
-import dominio.GestorInstituto;
+import dominio.Problema.GestorInstitutoOld;
 import exceptions.PrincipalException;
 import persistencia.PersistenciaDB;
 import persistencia.PersistenciaDBCurso;
@@ -121,6 +120,7 @@ public class FormEliminarAlumnoDeCurso extends JFrame implements ActionListener{
 
 		for (Alumno alumno : alumnos) {
 			if (alumno.getDni().equals(dniSeleccionado)) {
+				//posible mejora
 				String[] cursosInscriptos = PersistenciaDB.getCursosInscriptosDB(dniSeleccionado).split(", ");
 				for (String curso : cursosInscriptos) {
 					if (!curso.equals("Sin cursos") && !curso.trim().isEmpty()) {
@@ -138,7 +138,7 @@ public class FormEliminarAlumnoDeCurso extends JFrame implements ActionListener{
 	
 	private void modificarListaCursosAlumno(String cursoSeleccionado) {
 		// TODO Auto-generated method stub
-		ArrayList<Alumno> alumnos = GestorInstituto.getInstancia().getListaAlumnos();
+		ArrayList<Alumno> alumnos = GestorInstitutoOld.getInstancia().getListaAlumnos();
 		String[] partes = alumnoDNI.split("-"); // Suponiendo que el guión separa el nombre y el DNI
 		String dniSeleccionado = partes[0].trim();
 		
@@ -169,7 +169,7 @@ public class FormEliminarAlumnoDeCurso extends JFrame implements ActionListener{
 	
 	private void modificarVacantesCurso(String cursoSeleccionado) throws PrincipalException {
 		// TODO Auto-generated method stub
-		ArrayList<Curso> cursos = GestorInstituto.getInstancia().getListaCursos();
+		ArrayList<Curso> cursos = GestorInstitutoOld.getInstancia().getListaCursos();
 		for (Curso curso : cursos) {
 			if (curso.getNombre().equalsIgnoreCase(cursoSeleccionado)) {
 				Curso cursoNew = new Curso();

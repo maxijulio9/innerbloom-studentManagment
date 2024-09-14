@@ -1,15 +1,15 @@
-package dominio;
+package dominio.Problema;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import javax.swing.JOptionPane;
 
+import dominio.Alumno;
+import dominio.Curso;
 import exceptions.ApellidoVacioException;
-import exceptions.CantidadHorasException;
 import exceptions.DniInvalidoException;
 import exceptions.NombreVacioException;
 import exceptions.PrincipalException;
@@ -18,20 +18,22 @@ import persistencia.PersistenciaDB;
 import persistencia.PersistenciaDBCurso;
 
 
-public class GestorInstituto {
-	private static GestorInstituto ge;
-	private ArrayList<Alumno> listaAlumnos;
-	private String[] listaProfesores = {"Sin definir","Jeff Bezos","Hedy Lamar","Marcos Galperin", "Jorge Tejada","Mark Zuckeberg", "Elon Musk", "Mary Lee Woods"};
-	private ArrayList<Curso> listaCurso;
+public class GestorInstitutoOld {
+	private static GestorInstitutoOld ge;
+	public ArrayList<Alumno> listaAlumnos;
+	public String[] listaProfesores = {"Sin definir","Jeff Bezos","Hedy Lamar","Marcos Galperin", "Jorge Tejada","Mark Zuckeberg", "Elon Musk", "Mary Lee Woods"};
+	public ArrayList<Curso> listaCurso;
 
-	private GestorInstituto() {
+
+	private GestorInstitutoOld() {
 		listaAlumnos = new ArrayList<Alumno>();
+
 		listaCurso = new ArrayList<Curso>();
 	}
 	
-	public static GestorInstituto getInstancia() {
+	public static GestorInstitutoOld getInstancia() {
 		if (ge == null) {
-			ge = new GestorInstituto();
+			ge = new GestorInstitutoOld();
 		}
 		return ge;
 	}
@@ -62,6 +64,7 @@ public class GestorInstituto {
 		}
 		return false;	
 	}
+
 	public boolean agregarAlumno(String nombre, String apellido, String dni, String telefono) throws PrincipalException {//no debe recibir alumno, sino los datos de los text field
 //		Alumno alumno;
 		
@@ -93,7 +96,6 @@ public class GestorInstituto {
 				.filter(a->a.getDni().equals(alumno.getDni()))
 				.findAny().isPresent();
 	}
-	
 
 	public boolean agregarCurso(Curso curso) throws PrincipalException {
 		if (noExisteCurso1(curso)) {
@@ -115,18 +117,7 @@ public class GestorInstituto {
 	    }
 	    return true; // El curso no existe en la lista
 	}
-//	public boolean existeCurso(Curso curso) {
-////		this.listaCurso.stream().forEach(c-> c.getNombre().equalsIgnoreCase(curso.getNombre()));
-//		 return this.listaCurso.stream()
-//		            .anyMatch(c -> c.getCodigo() == curso.getCodigo() || c.getNombre().equalsIgnoreCase(curso.getNombre()));
-////		return this.listaCurso.stream().filter(c->c.equals(curso)).findAny().isPresent()
-////				|| this.listaCurso.stream().filter(c-> c.getNombre().equalsIgnoreCase(curso.getNombre())).findAny().isPresent();
-////		return this.listaCurso.contains(curso);
-//	}
-	
-	
-	//Eliminación}
-	
+
 	public boolean eliminarAlumno(String dni) throws PrincipalException {
 		
 		ArrayList<Alumno> listaAlumnosDB  =  PersistenciaDB.getAlumnos();

@@ -10,7 +10,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -18,15 +17,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
-import dominio.Alumno;
 import dominio.Curso;
-import dominio.GestorInstituto;
-import exceptions.DniInvalidoException;
-import exceptions.PrincipalException;
-import persistencia.PersistenciaDB;
-import persistencia.PersistenciaDBCurso;
+import dominio.Problema.GestorInstitutoOld;
+import dominio.SolucionSOLID.GestorInstituto;
 
 public class FormEliminarCurso extends JFrame implements ActionListener{
 
@@ -100,7 +94,7 @@ public class FormEliminarCurso extends JFrame implements ActionListener{
 	}
 	
 	private void cargarListadoCurso() {
-		GestorInstituto gp = GestorInstituto.getInstancia();
+		GestorInstitutoOld gp = GestorInstitutoOld.getInstancia();
 		ArrayList<Curso> cursos = gp.getListaCursos() ;//PersistenciaDBCurso.getCursos();
 		listadoCursos.removeAllItems();
 		for (Curso curso : cursos) {
@@ -124,15 +118,18 @@ public class FormEliminarCurso extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 
 		JButton source = (JButton) e.getSource();
+		//GestorInstitutoOld gp = GestorInstitutoOld.getInstancia();
 		GestorInstituto gp = GestorInstituto.getInstancia();
+
 		if (source == btnAceptar) {
 			if (listadoCursos.getSelectedItem() == null) {
 				JOptionPane.showMessageDialog(this, "Por favor seleccioná el curso que querés eliminar", "Datos incorrectos",
 						JOptionPane.ERROR_MESSAGE);
 			} else {
 				try {
-					 boolean seElimino = gp.eliminarCurso(listadoCursos.getSelectedItem().toString().trim());
-					 if (seElimino) {
+					//boolean seElimino = gp.eliminarCurso(listadoCursos.getSelectedItem().toString().trim());
+					boolean cursoDeleted = gp.deleteCursoFromList(listadoCursos.getSelectedItem().toString().trim());
+					if (cursoDeleted) {
 						 JOptionPane.showMessageDialog(this, "Curso eliminado",
 									"Proceso finalizado", JOptionPane.INFORMATION_MESSAGE);
 					}
