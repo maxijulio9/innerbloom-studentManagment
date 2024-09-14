@@ -1,6 +1,7 @@
 package dominio.SolucionSOLID.Curso;
 
 import dominio.Curso;
+import dominio.SolucionSOLID.GestorInstituto;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -10,8 +11,8 @@ public class CursoGetSortedList implements ICursoGetSortedList{
 
 
     @Override
-    public ArrayList<Curso> getCursosSortedByComparator(Comparator<Curso> comparatorSort, ArrayList<Curso> cursosList) {
-        return cursosList
+    public ArrayList<Curso> getCursosSortedByComparator(Comparator<Curso> comparatorSort) {
+        return GestorInstituto.getInstancia().listaCurso
                 .stream()
                 .sorted(comparatorSort)
                 .collect(Collectors.toCollection(ArrayList<Curso>::new));

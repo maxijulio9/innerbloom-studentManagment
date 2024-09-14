@@ -6,5 +6,5 @@ import java.util.ArrayList;
 import java.util.function.Predicate;
 
 public interface ICursoGetFilteredList {
-    ArrayList<Curso> getListadoFiltrado(Predicate<Curso> cursoFilter, ArrayList<Curso> cursosList);
+    ArrayList<Curso> getListadoFiltrado(Predicate<Curso> cursoFilter);
 }

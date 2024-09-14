@@ -10,9 +10,9 @@ public class CursoValidateExistenceAlumno {
         System.out.println("\n - actual >"+ nameCurso+"<");
 
         for (Alumno alumno : alumnos) {
-            String[] cursos= alumno.getCursosNombre().split(", ");
+            String[] cursosAlumno= alumno.getCursosNombre().split(", ");
 
-            for (String curso : cursos) {
+            for (String curso : cursosAlumno) {
                 if (curso.trim().equals(nameCurso.trim())) {
                     return false;
                 }

@@ -15,13 +15,13 @@ public class AlumnoCreation implements IAlumnoCreation {
 
     //check si realmente es necesario this method
     @Override
-    public boolean addAlumno(String nombre, String apellido, String dni, String telefono, GestorInstituto gestor) {
+    public boolean addAlumno(String nombre, String apellido, String dni, String telefono) {
 
         try {
             Alumno alumno = new Alumno(nombre, apellido, dni, telefono);
 
-            alumnoValidador.validar(alumno, gestor);
-            return gestor.listaAlumnos.add(alumno);
+            alumnoValidador.validar(alumno, GestorInstituto.getInstancia().listaAlumnos);
+            return GestorInstituto.getInstancia().listaAlumnos.add(alumno);
 
         } catch (PrincipalException e) {
             return false;
@@ -29,11 +29,11 @@ public class AlumnoCreation implements IAlumnoCreation {
 
     }
     @Override
-    public boolean addAlumno(Alumno alumno, GestorInstituto gestor) {
+    public boolean addAlumno(Alumno alumno) {
 
         try {
-            alumnoValidador.validar(alumno, gestor);  // Uso de AlumnoValidador para validar
-            return gestor.listaAlumnos.add(alumno);
+            alumnoValidador.validar(alumno, GestorInstituto.getInstancia().listaAlumnos);  // Uso de AlumnoValidador para validar
+            return GestorInstituto.getInstancia().listaAlumnos.add(alumno);
         } catch (PrincipalException e) {
             return false;
         }

@@ -8,5 +8,5 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public interface IAlumnoGetListSorted {
-    ArrayList<Alumno> getListadoAlumnosOrdenado(Comparator<Alumno> comparatorAlumno, GestorInstituto gestor) throws PrincipalException;
+    ArrayList<Alumno> getListadoAlumnosOrdenado(Comparator<Alumno> comparatorAlumno) throws PrincipalException;
 }

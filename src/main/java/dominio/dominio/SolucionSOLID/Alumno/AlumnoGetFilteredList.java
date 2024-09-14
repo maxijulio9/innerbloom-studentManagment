@@ -11,8 +11,9 @@ public class AlumnoGetFilteredList implements IAlumnoGetFiltered {
 
     //validar si es utilizado.--
     @Override
-    public ArrayList<Alumno> getListadoFiltradoAlumno(Predicate<Alumno> filtroAlumno, GestorInstituto gestor) {
-        return gestor.listaAlumnos.stream()
+    public ArrayList<Alumno> getListadoFiltradoAlumno(Predicate<Alumno> filtroAlumno) {
+        return GestorInstituto.getInstancia().listaAlumnos
+                .stream()
                 .filter(filtroAlumno)
                 .collect(Collectors.toCollection(ArrayList::new));
     }

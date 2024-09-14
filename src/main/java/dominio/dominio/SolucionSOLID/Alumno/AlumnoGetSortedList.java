@@ -11,9 +11,9 @@ import java.util.stream.Collectors;
 public class AlumnoGetSortedList implements IAlumnoGetListSorted {
 
     @Override
-    public ArrayList<Alumno> getListadoAlumnosOrdenado(Comparator<Alumno> comparatorAlumno, GestorInstituto gestor) throws PrincipalException {
+    public ArrayList<Alumno> getListadoAlumnosOrdenado(Comparator<Alumno> comparatorAlumno) throws PrincipalException {
         ArrayList<Alumno> alumnos;
-        alumnos = gestor.listaAlumnos
+        alumnos = GestorInstituto.getInstancia().listaAlumnos
                 .stream()
                 .sorted(comparatorAlumno)
                 .collect(Collectors.toCollection(ArrayList<Alumno>::new));

@@ -8,9 +8,9 @@ import javax.swing.*;
 
 public class AlumnoDelete implements IAlumnoDelete {
     @Override
-    public boolean deleteAlumno(String dni, GestorInstituto gestor) throws PrincipalException {
+    public boolean deleteAlumno(String dni) throws PrincipalException {
 
-        for (Alumno alumno : gestor.listaAlumnos) {
+        for (Alumno alumno : GestorInstituto.getInstancia().listaAlumnos) {
             if (alumno.getDni().equalsIgnoreCase(dni)) {
 
                 int opcion = JOptionPane.showConfirmDialog(
@@ -21,7 +21,7 @@ public class AlumnoDelete implements IAlumnoDelete {
                 );
 
                 if (opcion == JOptionPane.YES_OPTION) {
-                    gestor.listaAlumnos.remove(alumno);
+                    GestorInstituto.getInstancia().listaAlumnos.remove(alumno);
                     //PersistenciaDB.delete(alumno.getDni());
                     return true;
                 }

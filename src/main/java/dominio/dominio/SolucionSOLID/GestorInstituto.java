@@ -46,7 +46,8 @@ public class GestorInstituto {
 	}
 
 	//SOLID - inyecto Dependencias
-	public GestorInstituto (AlumnoCreation alumnoCreating,
+	public GestorInstituto (IAlumnoPersistencia alumnoPersistencia,
+							IAlumnoCreation alumnoCreating,
 							IAlumnoDelete alumnoDeleting,
 							IAlumnoGetDefaultList alumnosDefaultList,
 							IAlumnoGetFiltered alumnoGetFiltered,
@@ -56,6 +57,7 @@ public class GestorInstituto {
 							ICursoGetSortedList cursoGetSortedList,
 							ICursoGetFilteredList cursoGetFilteredList,
 							ICursoGetDefaultList cursoGetDefaultList) {
+		this.listaAlumnos = alumnoPersistencia.getListAlumnoFromDB();
 		this.alumnoCreation = alumnoCreating;
 		this.alumnoDelete = alumnoDeleting;
 		this.alumnosDefaultList = alumnosDefaultList;
@@ -71,6 +73,7 @@ public class GestorInstituto {
 	//S, O y D principñles applied
 	//but IDK if do this is necessary.
 	public ArrayList<Alumno> getAlumnoDefaultList() {
+
 		return alumnosDefaultList.getListAlumnos();
 	}
 	/*
@@ -101,14 +104,14 @@ public class GestorInstituto {
 
 	//Principio S y D
 	public boolean addAlumnoToList(Alumno alumno){
-		return alumnoCreation.addAlumno(alumno, gestor);
+		return alumnoCreation.addAlumno(alumno);
 
 		//return this.listaAlumnos.add(alumno);
 	}
 	//validar como agregar
 	public boolean addAlumnoToList(String nombre, String apellido, String dni, String telefono) throws PrincipalException {
 		//Alumno alumno =  new Alumno( nombre,  apellido,  dni,  telefono);
-		return alumnoCreation.addAlumno( nombre,  apellido,  dni,  telefono, gestor);
+		return alumnoCreation.addAlumno( nombre,  apellido,  dni,  telefono);
 	}
 
 	/*
@@ -159,7 +162,7 @@ public class GestorInstituto {
 
 	//Principio S y D
 	public boolean deleteAlumnoFromList(String dni) throws PrincipalException {
-		return alumnoDelete.deleteAlumno(dni, gestor);
+		return alumnoDelete.deleteAlumno(dni);
 	}
 
 	/*
@@ -271,7 +274,7 @@ public class GestorInstituto {
 
 	//Principio S y D
 	public ArrayList<Alumno> getAlumnosSortedList(Comparator<Alumno> comparatorAlumno) throws PrincipalException{
-		return alumnoGetListSorted.getListadoAlumnosOrdenado(comparatorAlumno, gestor);
+		return alumnoGetListSorted.getListadoAlumnosOrdenado(comparatorAlumno);
 	}
 
 	/*
@@ -293,7 +296,7 @@ public class GestorInstituto {
 
 	//Cursos ordenados SOLID -  S y D only
 	public ArrayList<Curso> getCursoSortedList(Comparator<Curso> comparatorSort){
-		return cursoGetSortedList.getCursosSortedByComparator(comparatorSort, this.listaCurso);
+		return cursoGetSortedList.getCursosSortedByComparator(comparatorSort);
 	}
 	/*
 	public ArrayList<Curso> getListadoCursosOrdenado(Comparator<Curso> compa){
@@ -308,7 +311,7 @@ public class GestorInstituto {
 
 	//Cursos filtrados SOLID -  S y D only
 	public ArrayList<Curso> getCursoFilteredList(Predicate<Curso> filterCurso){
-		return cursoGetFilteredList.getListadoFiltrado(filterCurso, this.listaCurso);
+		return cursoGetFilteredList.getListadoFiltrado(filterCurso);
 	}
 	/*
 	//devuelve lista filtrada
@@ -323,7 +326,7 @@ public class GestorInstituto {
 
 	//	Principio S y D aplicado
 	public ArrayList<Alumno> getAlumnoFilteredList(Predicate<Alumno> filtroAlumno){
-		return alumnoGetFiltered.getListadoFiltradoAlumno(filtroAlumno, gestor);
+		return alumnoGetFiltered.getListadoFiltradoAlumno(filtroAlumno);
 		//return getListadoFiltradoAlumno(filtroAlumno, ge);
 	}
 

@@ -11,4 +11,5 @@ public class CursoGetDefaultList implements ICursoGetDefaultList {
     public ArrayList<Curso> getListCursos() {
         return PersistenciaDBCurso.getCursos();
     }
+
 }
