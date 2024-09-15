@@ -14,7 +14,7 @@ import java.util.function.Predicate;
 public class GestorInstituto {
 	private static GestorInstituto gestor;
 	public ArrayList<Alumno> listaAlumnos;
-	public String[] listaProfesores = {"Sin definir","Jeff Bezos","Hedy Lamar","Marcos Galperin", "Jorge Tejada","Mark Zuckeberg", "Elon Musk", "Mary Lee Woods"};
+	public String[] listaProfesores = {"Sin definir", "Jeff Bezos", "Hedy Lamar", "Marcos Galperin", "Jorge Tejada", "Mark Zuckeberg", "Elon Musk", "Mary Lee Woods"};
 	public ArrayList<Curso> listaCurso;
 
 	//interfaces ALUMNOS
@@ -40,7 +40,7 @@ public class GestorInstituto {
 
 		listaCurso = new ArrayList<Curso>();
 	}
-
+/*
 	public static GestorInstituto getInstancia() {
 		if (gestor == null) {
 			gestor = new GestorInstituto();
@@ -57,7 +57,7 @@ public class GestorInstituto {
 		}
 		return gestor;
 	}
-
+*/
 	/*
 	//SOLID - inyecto Dependencias
 	public GestorInstituto (IAlumnoPersistencia alumnoPersistencia,
@@ -85,6 +85,7 @@ public class GestorInstituto {
 		this.cursoGetDefaultList = cursoGetDefaultList;
 	}
 	 */
+
 	public GestorInstituto(IAlumnoGetDefaultList alumnosDefaultList,
 						   IAlumnoCreation alumnoCreating,
 						   IAlumnoDelete alumnoDeleting) {
@@ -113,6 +114,39 @@ public class GestorInstituto {
 		this.listaCurso = cursoGetDefaultList.getListCursos();
 	}
 
+
+	public static GestorInstituto getInstancia() {
+		if (gestor == null) {
+			gestor = new GestorInstituto();  // Llama al constructor sin parámetros
+		} else {
+			System.out.println("Ya se  inicializo GestorInstituto. No se puede cambiar la configuración.");
+		}
+		return gestor;
+	}
+
+	public static GestorInstituto getInstancia(IAlumnoGetDefaultList alumnosDefaultList,
+											   IAlumnoCreation alumnoCreating,
+											   IAlumnoDelete alumnoDeleting) {
+		if (gestor == null) {
+			gestor = new GestorInstituto(alumnosDefaultList, alumnoCreating, alumnoDeleting);
+		} else {
+			System.out.println("Ya se  inicializo GestorInstituto. No se puede cambiar la configuración.");
+		}
+		return gestor;
+	}
+
+	public static GestorInstituto getInstancia(ICursoCreation cursoCreation,
+											   ICursoDelete cursoDelete,
+											   ICursoGetSortedList cursoGetSortedList,
+											   ICursoGetFilteredList cursoGetFilteredList,
+											   ICursoGetDefaultList cursoGetDefaultList) {
+		if (gestor == null) {
+			gestor = new GestorInstituto(cursoCreation, cursoDelete, cursoGetSortedList, cursoGetFilteredList, cursoGetDefaultList);
+		} else {
+			System.out.println("Ya se  inicializo GestorInstituto. No se puede cambiar la configuración.");
+		}
+		return gestor;
+	}
 
 	//S, O y D principñles applied
 	//but IDK if do this is necessary.
