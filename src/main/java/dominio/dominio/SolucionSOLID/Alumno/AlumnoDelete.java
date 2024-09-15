@@ -7,6 +7,8 @@ import exceptions.PrincipalException;
 import javax.swing.*;
 
 public class AlumnoDelete implements IAlumnoDelete {
+
+
     @Override
     public boolean deleteAlumno(String dni) throws PrincipalException {
 

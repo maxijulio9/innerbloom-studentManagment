@@ -4,19 +4,19 @@ import dominio.Alumno;
 import dominio.SolucionSOLID.GestorInstituto;
 import exceptions.PrincipalException;
 
-import java.util.ArrayList;
+public class AlumnoValidationExistence {
 
-public class AlumnoValidationExisting {
-
-    public void validar(Alumno alumno, ArrayList<Alumno> listaAlumnos) throws PrincipalException {
-        if (existeAlumno(alumno, listaAlumnos)) {
+    public void validar(Alumno alumno) throws PrincipalException {
+        System.out.println("Validating...");
+        if (existeAlumno(alumno)) {
             throw new PrincipalException("Ya se encuentra registrado.");
         }
         // Otras validaciones pueden ir aquí
     }
 
-    private boolean existeAlumno(Alumno alumno, ArrayList<Alumno> listaAlumnos) {
-        return listaAlumnos.stream()
+    private boolean existeAlumno(Alumno alumno) {
+        return GestorInstituto.getInstancia().getAlumnoDefaultList()
+                .stream()
                 .anyMatch(a -> a.getDni().equals(alumno.getDni()));
     }
 }

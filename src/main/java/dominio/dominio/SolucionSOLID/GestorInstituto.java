@@ -32,12 +32,15 @@ public class GestorInstituto {
 	private ICursoGetDefaultList cursoGetDefaultList;
 
 	//Old constructor
+
 	private GestorInstituto() {
+		System.out.println("CONSTRUCTOR : ");
+
 		listaAlumnos = new ArrayList<Alumno>();
 
 		listaCurso = new ArrayList<Curso>();
 	}
-	
+
 	public static GestorInstituto getInstancia() {
 		if (gestor == null) {
 			gestor = new GestorInstituto();
@@ -45,6 +48,17 @@ public class GestorInstituto {
 		return gestor;
 	}
 
+
+	//Getinstance constructor Alumno
+	public static GestorInstituto getInstancia(IAlumnoGetDefaultList alumnosDefaultList,IAlumnoCreation alumnoCreating,IAlumnoDelete alumnoDeleting) {
+		if (gestor == null) {
+			System.out.println("Is not null");
+			gestor = new GestorInstituto(alumnosDefaultList, alumnoCreating, alumnoDeleting);
+		}
+		return gestor;
+	}
+
+	/*
 	//SOLID - inyecto Dependencias
 	public GestorInstituto (IAlumnoPersistencia alumnoPersistencia,
 							IAlumnoCreation alumnoCreating,
@@ -57,7 +71,8 @@ public class GestorInstituto {
 							ICursoGetSortedList cursoGetSortedList,
 							ICursoGetFilteredList cursoGetFilteredList,
 							ICursoGetDefaultList cursoGetDefaultList) {
-		this.listaAlumnos = alumnoPersistencia.getListAlumnoFromDB();
+		this.alumnosDefaultList = alumnosDefaultList;
+		this.listaAlumnos = alumnosDefaultList.getListAlumnos();
 		this.alumnoCreation = alumnoCreating;
 		this.alumnoDelete = alumnoDeleting;
 		this.alumnosDefaultList = alumnosDefaultList;
@@ -69,12 +84,41 @@ public class GestorInstituto {
 		this.cursoGetFilteredList = cursoGetFilteredList;
 		this.cursoGetDefaultList = cursoGetDefaultList;
 	}
+	 */
+	public GestorInstituto(IAlumnoGetDefaultList alumnosDefaultList,
+						   IAlumnoCreation alumnoCreating,
+						   IAlumnoDelete alumnoDeleting) {
+		listaAlumnos = new ArrayList<Alumno>();
+
+
+		this.alumnosDefaultList = alumnosDefaultList;
+		this.listaAlumnos = alumnosDefaultList.getListAlumnos();
+		System.out.println("CONSTRUCTOR ALUMNO: "+alumnoCreating);
+		this.alumnoCreation = alumnoCreating;
+		this.alumnoDelete = alumnoDeleting;
+	}
+
+	public GestorInstituto(ICursoCreation cursoCreation,
+						   ICursoDelete cursoDelete,
+						   ICursoGetSortedList cursoGetSortedList,
+						   ICursoGetFilteredList cursoGetFilteredList,
+						   ICursoGetDefaultList cursoGetDefaultList) {
+		listaCurso = new ArrayList<Curso>();
+
+		this.cursoCreation = cursoCreation;
+		this.cursoDelete = cursoDelete;
+		this.cursoGetSortedList = cursoGetSortedList;
+		this.cursoGetFilteredList = cursoGetFilteredList;
+		this.cursoGetDefaultList = cursoGetDefaultList;
+		this.listaCurso = cursoGetDefaultList.getListCursos();
+	}
+
 
 	//S, O y D principñles applied
 	//but IDK if do this is necessary.
 	public ArrayList<Alumno> getAlumnoDefaultList() {
 
-		return alumnosDefaultList.getListAlumnos();
+		return this.listaAlumnos;
 	}
 	/*
 	//old
@@ -104,6 +148,7 @@ public class GestorInstituto {
 
 	//Principio S y D
 	public boolean addAlumnoToList(Alumno alumno){
+		//System.out.println("VLAOR: " +  alumnoCreation.addAlumno(alumno) );
 		return alumnoCreation.addAlumno(alumno);
 
 		//return this.listaAlumnos.add(alumno);
