@@ -7,20 +7,26 @@ import dominio.SolucionSOLID.GestorInstituto;
 import exceptions.PrincipalException;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
-public class AlumnoDelete implements IDeletion {
+public class AlumnoDelete implements IDeletion<Alumno> {
 
 
     @Override
-    public boolean delete(String dni) throws PrincipalException {
-
+    public boolean delete(String dni, ArrayList<Alumno> alumnosList) throws PrincipalException {
+/*
         for (Alumno alumno : GestorInstituto
                 .getInstance(null, null)
                 .getAlumnoDefaultList()) {//getInstancia().listaAlumnos) {
+        */
+
+        for (Alumno alumno : alumnosList) {
             if (alumno.getDni().equalsIgnoreCase(dni)) {
 
                 //verificar si se elimina desde  el metodo deleteAlumnoFromList o de otro lugar
-                return GestorInstituto.getInstance(null, null).deleteAlumnoFromList(alumno.getDni());//getInstancia().listaAlumnos.remove(alumno);
+                //return GestorInstituto.getInstance(null, null).deleteAlumnoFromList(alumno.getDni());//getInstancia().listaAlumnos.remove(alumno);
+
+                return alumnosList.remove(alumno);
                 //PersistenciaDB.delete(alumno.getDni());
             }
         }

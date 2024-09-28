@@ -12,12 +12,15 @@ public class CursoValidationExisting {
     public boolean existingCurso (Curso curso, ArrayList<Curso> cursosList) {
         //acá tmb seperate to another class to get the cursos
         ArrayList<Curso> listadoCurso= cursosList;
-
+        System.out.println(cursosList);
+        if (cursosList.isEmpty()){
+            return false;
+        }
         for (Curso c : listadoCurso) {
             if (c.getCodigo() == curso.getCodigo() || c.getNombre().trim().equalsIgnoreCase(curso.getNombre().trim())) {
-                return false; // El curso ya existe en la lista
+                return true; // El curso ya existe en la lista
             }
         }
-        return true; // El curso no existe en la lista
+        return false;
     }
 }

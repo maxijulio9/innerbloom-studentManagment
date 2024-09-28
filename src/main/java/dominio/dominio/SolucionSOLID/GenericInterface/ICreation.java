@@ -7,5 +7,4 @@ import java.util.ArrayList;
 public interface ICreation<T> {
     boolean add(T entity, ArrayList<T> list);
 
-
 }

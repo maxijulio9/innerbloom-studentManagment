@@ -4,42 +4,30 @@ import dominio.Alumno;
 import dominio.SolucionSOLID.GestorInstituto;
 import exceptions.PrincipalException;
 
+import java.util.ArrayList;
+
 public class AlumnoValidationExistence {
 
-    public void validar(Alumno alumno) throws PrincipalException {
+    public void validar(Alumno alumno, ArrayList<Alumno> alumnosList) throws PrincipalException {
         System.out.println("Validating...");
-        if (existeAlumno(alumno)) {
+        if (existeAlumno(alumno, alumnosList)) {
             throw new PrincipalException("Ya se encuentra registrado.");
         }
         // Otras validaciones pueden ir
     }
 
-    private boolean existeAlumno(Alumno alumno) {
-        /*
-        boolean existeONo = GestorInstituto.getInstance(
-                        null, // No estamos utilizando IGestor para este ejemplo simple
-                        null,
-                        null,
-                        null, // No estamos utilizando IDeletion en este ejemplo
-                        null,
-                        null,
-                        null,
-                        null, // No estamos utilizando ICreation para cursos
-                        null,
-                        null,
-                        null,
-                        null
-                ).getAlumnoDefaultList()
-                .stream()
-                .anyMatch(a -> a.getDni().equals(alumno.getDni()));
+    private boolean existeAlumno(Alumno alumno, ArrayList<Alumno> alumnosList) {
 
-         */
+        /*
         boolean existeONo = GestorInstituto.getInstance(null, null).getAlumnoDefaultList()
                 .stream()
                 .anyMatch(a -> a.getDni().equals(alumno.getDni()));
 
-        System.out.println("EXiste alumno? "+ existeONo);
+         */
+        //System.out.println("EXiste alumno? "+ existeONo);
 
-        return existeONo;
+        return alumnosList
+                .stream()
+                .anyMatch(a -> a.getDni().equals(alumno.getDni()));
     }
 }

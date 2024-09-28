@@ -17,10 +17,10 @@ public class GestorAlumnos implements IGestor<Alumno> {
     private IGetFilteredList alumnoGetFiltered;
     private IGetDefaultList alumnoGetDefaultList;
 
-    public GestorAlumnos(ArrayList<Alumno> listaAlumnos, ICreation<Alumno> alumnoCreation,
+    public GestorAlumnos(ArrayList<Alumno> alumnosList, ICreation<Alumno> alumnoCreation,
                          IDeletion<Alumno> alumnoDelete, IGetSortedList<Alumno> alumnoGetListSorted,
                          IGetFilteredList<Alumno> alumnoGetFiltered, IGetDefaultList<Alumno> alumnoGetDefaultList) {
-        this.alumnosList = listaAlumnos; // Se asigna la lista pasada por referencia
+        this.alumnosList = alumnosList; //por referencia
         this.alumnoCreation = alumnoCreation;
         this.alumnoDelete = alumnoDelete;
         this.alumnoGetListSorted = alumnoGetListSorted;
@@ -36,7 +36,7 @@ public class GestorAlumnos implements IGestor<Alumno> {
 
     @Override
     public boolean deleteFromList(String dni) throws PrincipalException {
-        return alumnoDelete.delete(dni);
+        return alumnoDelete.delete(dni, alumnosList);
     }
 
     @Override
@@ -46,11 +46,11 @@ public class GestorAlumnos implements IGestor<Alumno> {
 
     @Override
     public ArrayList<Alumno> getFilteredList(Predicate<Alumno> filter) {
-        return alumnoGetFiltered.getFilteredList(filter);
+        return alumnoGetFiltered.getFilteredList(filter, alumnosList);
     }
 
     @Override
     public ArrayList<Alumno> getDefaultList() {
-        return alumnoGetDefaultList.getDefaultList();
+        return alumnoGetDefaultList.getDefaultList(alumnosList);
     }
 }

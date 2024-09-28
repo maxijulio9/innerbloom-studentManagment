@@ -2,6 +2,8 @@ package dominio.SolucionSOLID;
 
 import dominio.Alumno;
 import dominio.Curso;
+import dominio.SolucionSOLID.Alumno.*;
+import dominio.SolucionSOLID.Curso.*;
 import dominio.SolucionSOLID.Gestor.GestorAlumnos;
 import dominio.SolucionSOLID.Gestor.GestorCursos;
 import exceptions.PrincipalException;
@@ -110,10 +112,25 @@ public class GestorInstituto {
 	}
 
 	public GestorInstituto(IGestor<Alumno> alumnoGestor, IGestor<Curso> cursoGestor) {
-		this.alumnoGestor = new GestorAlumnos(alumnosList,null,null,null,null,null);// alumnoGestor;
-		this.cursoGestor = new GestorCursos(cursosList,null,null,null,null,null);//cursoGestor;
+		System.out.println("CREATING GestorInstituto");
 		this.alumnosList = new ArrayList<Alumno>();
 		this.cursosList = new ArrayList<Curso>();
+		this.alumnoGestor = alumnoGestor;
+		this.cursoGestor  = cursoGestor;
+		/*
+		this.alumnoGestor = new GestorAlumnos(alumnosList,new AlumnoCreation(),
+															new AlumnoDelete(),
+															new AlumnoGetSortedList(),
+															new AlumnoGetFilteredList(),
+															new AlumnoGetDefaultList());// alumnoGestor;
+		this.cursoGestor = new GestorCursos(cursosList,new CursoCreation(),
+														new CursoDelete(),
+														new CursoGetSortedList(),
+														new CursoGetFilteredList(),
+														new CursoGetDefaultList());//cursoGestor;
+
+		 */
+
 
 	}
 
@@ -130,7 +147,7 @@ public class GestorInstituto {
 
 	public boolean addAlumnoToList(Alumno alumno) throws PrincipalException {
 		//if (alumno == null) {
-		//	throw new IllegalArgumentException("El alumno no puede ser nulo.");
+		//	throw new IllegalArgumentException("El alumno no puede ser nulo");
 		//}
 		//GestorAlumnos gestorAlumno = new GestorAlumnos(alumnosList,null,null,null,null,null);
 		return alumnoGestor.addToList(alumno);
@@ -138,6 +155,7 @@ public class GestorInstituto {
 
 	}
 	public ArrayList<Alumno> getAlumnoDefaultList() {
+
 		return alumnoGestor.getDefaultList();//alumnoDefaultList.getList();
 	}
 
@@ -157,8 +175,10 @@ public class GestorInstituto {
 
 	public boolean addCursoToList(Curso curso) throws PrincipalException {
 		if (curso == null) {
+			System.out.println("El curso no puede ser nulo.");
 			throw new IllegalArgumentException("El curso no puede ser nulo.");
 		}
+		System.out.println("Se registró el curso");
 		return cursoGestor.addToList(curso);//cursoCreation.add(curso);
 	}
 

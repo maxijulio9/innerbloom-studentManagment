@@ -1,6 +1,10 @@
 import dominio.Alumno;
+import dominio.Curso;
 import dominio.SolucionSOLID.Alumno.*;
+import dominio.SolucionSOLID.Curso.*;
 import dominio.SolucionSOLID.GenericInterface.ICreation;
+import dominio.SolucionSOLID.Gestor.GestorAlumnos;
+import dominio.SolucionSOLID.Gestor.GestorCursos;
 import dominio.SolucionSOLID.GestorInstituto;
 import exceptions.PrincipalException;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,26 +19,33 @@ class GestorInstitutoTest {
     private ArrayList<Alumno> listaAlumnos;
     private Alumno alumno1;
     private Alumno alumno2;
+    private GestorInstituto gestorcito;
 
     @BeforeEach
     void setUp() throws PrincipalException {
-        // Inicializa la lista de alumnos
-        AlumnoGetDefaultList alumnosDefaultList = new AlumnoGetDefaultList();
-        listaAlumnos = alumnosDefaultList.getDefaultList();
+        // Crea la instancia del gestor
+       // GestorInstituto gestorcito = GestorInstituto.getInstance(null,null);//getInstancia(alumnosDefaultList, alumnoCreating, alumnoDeleting);
+        gestorcito = new GestorInstituto(new GestorAlumnos(new ArrayList<Alumno>(),new AlumnoCreation(),new AlumnoDelete(),
+                new AlumnoGetSortedList(),
+                new AlumnoGetFilteredList(),
+                new AlumnoGetDefaultList()),
+                new GestorCursos(new ArrayList<Curso>(),new CursoCreation(),
+                        new CursoDelete(),
+                        new CursoGetSortedList(),
+                        new CursoGetFilteredList(),
+                        new CursoGetDefaultList()));
+
+        //AlumnoGetDefaultList alumnosDefaultList = new AlumnoGetDefaultList();
+      //  listaAlumnos = gestorcito.getAlumnoDefaultList();
 
         // Crea las instancias de alumnos
         alumno1 = new Alumno("Juan", "Pérez", "12345678", "55234");
         alumno2 = new Alumno("Ana", "Garcia", "87654321", "78433");
 
-        // Crea instancias para la creación y eliminación de alumnos
-        ICreation alumnoCreating = new AlumnoCreation();
+        //ICreation alumnoCreating = new AlumnoCreation();
         //IAlumnoDelete alumnoDeleting = new AlumnoDelete();
 
-        alumnoCreating.add(alumno1,null);
-
-
-        // Crea la instancia del gestor
-        GestorInstituto gestorcito = GestorInstituto.getInstance(null,null);//getInstancia(alumnosDefaultList, alumnoCreating, alumnoDeleting);
+//        alumnoCreating.add(alumno1,null);
 
         // Agrega los alumnos a la lista
         gestorcito.addAlumnoToList(alumno1);
@@ -44,19 +55,20 @@ class GestorInstitutoTest {
     @Test
     void testAlumnoExists() throws PrincipalException {
         // Crea una nueva instancia de GestorInstituto para realizar el test
-        AlumnoGetDefaultList alumnosDefaultList = new AlumnoGetDefaultList();
-        ICreation alumnoCreating = new AlumnoCreation();
-     //   IAlumnoDelete alumnoDeleting = new AlumnoDelete();
-        alumnoCreating.add(alumno1,null);
-        GestorInstituto gestorcito = GestorInstituto.getInstance(null,null);
+        //GestorInstituto gestorcito = GestorInstituto.getInstance(null,null);
 
-        // Verifica que el alumno ya registrado no se pueda agregar nuevamente
-        assertFalse(gestorcito.addAlumnoToList(alumno1), "Ya se encuentra registrado.");
-        assertFalse(gestorcito.addAlumnoToList(alumno2), "Ya se encuentra registrado.");
+        //AlumnoGetDefaultList alumnosDefaultList = new AlumnoGetDefaultList();
+        //ICreation alumnoCreating = new AlumnoCreation();
+     //   IAlumnoDelete alumnoDeleting = new AlumnoDelete();
+        //alumnoCreating.add(alumno1,null);
+
+        // Verifica que el alumno ya registrado no se pueda agregar nuevamente(agreado en before)
+        assertFalse(gestorcito.addAlumnoToList(alumno1), "El alumno ya se encuentra registrado" );
+        assertFalse(gestorcito.addAlumnoToList(alumno2), "El alumno ya se encuentra registrado" );
 
         // Crea un nuevo alumno que no está registrado
         Alumno alumnoNoRegistrado = new Alumno("María", "López", "11223344", "59999");
-        assertTrue(gestorcito.addAlumnoToList(alumnoNoRegistrado), "Alumno registrado correctamente.");
+        assertTrue(gestorcito.addAlumnoToList(alumnoNoRegistrado), "¡Alumno registrado correctamente!");
     }
 }
 

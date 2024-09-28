@@ -11,9 +11,18 @@ import java.util.stream.Collectors;
 public class CursoGetFilteredList implements IGetFilteredList<Curso> {
 
     @Override
-    public ArrayList<Curso> getFilteredList(Predicate<Curso> cursoFilter) {
+    public ArrayList<Curso> getFilteredList(Predicate<Curso> cursoFilter, ArrayList<Curso> cursosList) {
+
+        return  cursosList
+                .stream()
+                .filter(cursoFilter)
+                .collect(Collectors.toCollection(ArrayList::new));
+        /*
         return  GestorInstituto.getInstance(null,null ).getCursosDefaultList()
                 .stream()
                 .filter(cursoFilter)
-                .collect(Collectors.toCollection(ArrayList::new));    }
+                .collect(Collectors.toCollection(ArrayList::new));
+
+         */
+    }
 }

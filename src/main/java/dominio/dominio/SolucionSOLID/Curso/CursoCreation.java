@@ -18,6 +18,7 @@ public class CursoCreation implements ICreation <Curso> {
     @Override
     public boolean add(Curso curso, ArrayList<Curso> cursosList) {
         boolean existe =  cursoValidator.existingCurso(curso, cursosList);
+        System.out.println("Existe o no? "+ existe);
         if (!existe){
             return cursosList.add(curso);
         }

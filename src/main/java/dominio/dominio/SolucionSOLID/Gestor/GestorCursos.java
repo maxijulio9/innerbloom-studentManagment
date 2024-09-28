@@ -17,10 +17,11 @@ public class GestorCursos implements IGestor<Curso> {
     private IGetFilteredList cursoGetFilteredList;
     private IGetDefaultList cursoGetDefaultList;
 
-    public GestorCursos(ArrayList<Curso>cursosList, ICreation cursoCreation, IDeletion cursoDelete,
+    public GestorCursos(ArrayList<Curso> cursosList, ICreation cursoCreation, IDeletion cursoDelete,
                         IGetSortedList cursoGetSortedList, IGetFilteredList cursoGetFilteredList,
                         IGetDefaultList cursoGetDefaultList) {
-       // this.listaCursos = cursoGetDefaultList.getDefaultList();
+        //this.listaCursos = cursoGetDefaultList.getDefaultList();
+        this.cursosList = cursosList;
         this.cursoCreation = cursoCreation;
         this.cursoDelete = cursoDelete;
         this.cursoGetSortedList = cursoGetSortedList;
@@ -35,7 +36,7 @@ public class GestorCursos implements IGestor<Curso> {
 
     @Override
     public boolean deleteFromList(String nameCurso) throws PrincipalException {
-        return cursoDelete.delete(nameCurso);
+        return cursoDelete.delete(nameCurso, cursosList);
     }
 
     @Override
@@ -45,11 +46,11 @@ public class GestorCursos implements IGestor<Curso> {
 
     @Override
     public ArrayList<Curso> getFilteredList(Predicate<Curso> filter) {
-        return cursoGetFilteredList.getFilteredList(filter);
+        return cursoGetFilteredList.getFilteredList(filter, cursosList);
     }
 
     @Override
     public ArrayList<Curso> getDefaultList() {
-        return cursoGetDefaultList.getDefaultList();
+        return cursoGetDefaultList.getDefaultList(cursosList);
     }
 }

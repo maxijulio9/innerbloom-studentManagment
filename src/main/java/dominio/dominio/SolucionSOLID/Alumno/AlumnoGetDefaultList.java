@@ -10,9 +10,10 @@ import java.util.ArrayList;
 public class AlumnoGetDefaultList implements IGetDefaultList <Alumno>{
 
     @Override
-    public ArrayList<Alumno> getDefaultList() {
+    public ArrayList<Alumno> getDefaultList(ArrayList<Alumno> lists) {
 
-        return GestorInstituto.getInstance(null,null).getAlumnoDefaultList();
+        return lists;
+        //return GestorInstituto.getInstance(null,null).getAlumnoDefaultList();
         //return PersistenciaDB.getAlumnos();
     }
 }

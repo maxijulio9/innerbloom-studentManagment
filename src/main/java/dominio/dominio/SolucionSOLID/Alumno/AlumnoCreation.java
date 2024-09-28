@@ -54,7 +54,7 @@ public class AlumnoCreation implements ICreation<Alumno> {
 
         try {
             System.out.println("Ingreséeeee");
-            alumnoValidador.validar(alumno);  // Uso de AlumnoValidador para validar
+            alumnoValidador.validar(alumno, alumnosList);  // Uso de AlumnoValidador para validar
 
             /*
             return GestorInstituto.getInstance(

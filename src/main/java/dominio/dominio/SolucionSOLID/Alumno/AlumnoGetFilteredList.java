@@ -12,11 +12,17 @@ public class AlumnoGetFilteredList implements IGetFilteredList <Alumno> {
 
     //validar si es utilizado.--
     @Override
-    public ArrayList<Alumno> getFilteredList(Predicate<Alumno> filtroAlumno) {
-        return GestorInstituto.getInstance(null,null)
+    public ArrayList<Alumno> getFilteredList(Predicate<Alumno> filtroAlumno, ArrayList<Alumno> alumnosList) {
+        return alumnosList//getInstancia().listaAlumnos
+                .stream()
+                .filter(filtroAlumno)
+                .collect(Collectors.toCollection(ArrayList::new));
+        /* return GestorInstituto.getInstance(null,null)
                 .getAlumnoDefaultList()//getInstancia().listaAlumnos
                 .stream()
                 .filter(filtroAlumno)
                 .collect(Collectors.toCollection(ArrayList::new));
+
+        */
     }
 }

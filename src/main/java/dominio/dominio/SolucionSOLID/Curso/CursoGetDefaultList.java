@@ -10,10 +10,11 @@ import java.util.ArrayList;
 public class CursoGetDefaultList implements IGetDefaultList<Curso> {
 
     @Override
-    public ArrayList<Curso> getDefaultList() {
+    public ArrayList<Curso> getDefaultList(ArrayList<Curso> cursos) {
 
-        return GestorInstituto.getInstance(null, null)
-                                .getCursosDefaultList();
+        return cursos;
+        //return GestorInstituto.getInstance(null, null)
+          //                      .getCursosDefaultList();
         //return PersistenciaDBCurso.getCursos();
     }
 

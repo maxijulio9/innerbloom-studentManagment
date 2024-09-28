@@ -10,6 +10,8 @@ import exceptions.PrincipalException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GestorInstitutoTestCurso {
@@ -20,11 +22,11 @@ public class GestorInstitutoTestCurso {
     public void setUp() {
         // Inicializamos GestorInstituto con sus dependencias necesarias
         // Aquí no usamos mocks, sino instancias reales de las clases.
-        gestorInstituto = new GestorInstituto(new GestorAlumnos(null,new AlumnoCreation(),new AlumnoDelete(),
+        gestorInstituto = new GestorInstituto(new GestorAlumnos(new ArrayList<Alumno>(),new AlumnoCreation(),new AlumnoDelete(),
                                                                 new AlumnoGetSortedList(),
                                                                 new AlumnoGetFilteredList(),
                                                                 new AlumnoGetDefaultList()),
-                                            new GestorCursos(null,new CursoCreation(),
+                                            new GestorCursos(new ArrayList<Curso>(),new CursoCreation(),
                                                             new CursoDelete(),
                                                             new CursoGetSortedList(),
                                                             new CursoGetFilteredList(),
@@ -41,7 +43,8 @@ public class GestorInstitutoTestCurso {
 
         boolean resultado = gestorInstituto.addCursoToList(curso);
 
-        assertTrue(resultado, "¡Nuevo curso registrado, que alegría crecer!");
+        System.out.println("ERESULTADO test 3 "+ resultado);
+        assertTrue(resultado);//, "¡Nuevo curso registrado, que alegría crecer!");
     }
 
     @Test

@@ -1,5 +1,6 @@
 package dominio.SolucionSOLID.Curso;
 
+import dominio.Alumno;
 import dominio.Curso;
 import dominio.SolucionSOLID.Alumno.AlumnoGetDefaultList;
 import dominio.SolucionSOLID.Alumno.IAlumnoGetDefaultList;
@@ -11,8 +12,8 @@ import persistencia.PersistenciaDBCurso;
 import java.util.ArrayList;
 
 public class CursoDelete implements IDeletion<Curso> {
-    private CursoGetDefaultList cursoList;
-    private AlumnoGetDefaultList alumnoList;
+    //private CursoGetDefaultList cursoList;
+    //private AlumnoGetDefaultList alumnoList;
     private CursoValidateExistenceAlumno cursoHasAlumno;
 
 
@@ -26,31 +27,21 @@ public class CursoDelete implements IDeletion<Curso> {
      */
 
     @Override
-    public boolean delete(String nameCurso) throws PrincipalException {
+    public boolean delete(String nameCurso, ArrayList<Curso> cursosList) throws PrincipalException {
 
-        ArrayList<Curso> cursoLista =  cursoList.getDefaultList();
-        for (Curso curso : cursoLista) {
+        //ArrayList<Curso> cursoLista =  cursoList.getDefaultList();
+
+        ArrayList<Alumno> alumnosList = GestorInstituto.getInstance(null, null).getAlumnoDefaultList();
+        for (Curso curso : cursosList) {
             if (curso.getNombre().trim().equals(nameCurso.trim())
-                    && cursoHasAlumno.cursoWithoutAlumno(alumnoList.getDefaultList(), nameCurso)) {
+                    && cursoHasAlumno.cursoWithoutAlumno(alumnosList, nameCurso)) {
 //				System.out.println("elimino");
-                PersistenciaDBCurso.delete(nameCurso);
+                //PersistenciaDBCurso.delete(nameCurso);
 
-                return true;
+                return cursosList.remove(curso);
             }
         }
-        /*
-        for (Curso curso : cursoList.getListCursos()) {
-            if (curso.getNombre().trim().equals(nameCurso.trim())
-                    && cursoHasAlumno.cursoWithoutAlumno(alumnoList.getListAlumnos(), nameCurso)) {
-//				System.out.println("elimino");
-                PersistenciaDBCurso.delete(nameCurso);
-
-                return true;
-            }
-        }
-
-         */
         return false;
-        //throw new PrincipalException("El curso que intentas eliminar tiene alumnos registrados");
+        //return  throw new PrincipalException("El curso que intentas eliminar tiene alumnos registrados");
     }
 }
