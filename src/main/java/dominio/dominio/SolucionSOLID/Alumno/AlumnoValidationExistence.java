@@ -11,12 +11,35 @@ public class AlumnoValidationExistence {
         if (existeAlumno(alumno)) {
             throw new PrincipalException("Ya se encuentra registrado.");
         }
-        // Otras validaciones pueden ir aquí
+        // Otras validaciones pueden ir
     }
 
     private boolean existeAlumno(Alumno alumno) {
-        return GestorInstituto.getInstancia().getAlumnoDefaultList()
+        /*
+        boolean existeONo = GestorInstituto.getInstance(
+                        null, // No estamos utilizando IGestor para este ejemplo simple
+                        null,
+                        null,
+                        null, // No estamos utilizando IDeletion en este ejemplo
+                        null,
+                        null,
+                        null,
+                        null, // No estamos utilizando ICreation para cursos
+                        null,
+                        null,
+                        null,
+                        null
+                ).getAlumnoDefaultList()
                 .stream()
                 .anyMatch(a -> a.getDni().equals(alumno.getDni()));
+
+         */
+        boolean existeONo = GestorInstituto.getInstance(null, null).getAlumnoDefaultList()
+                .stream()
+                .anyMatch(a -> a.getDni().equals(alumno.getDni()));
+
+        System.out.println("EXiste alumno? "+ existeONo);
+
+        return existeONo;
     }
 }

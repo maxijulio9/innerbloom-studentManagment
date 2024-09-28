@@ -2,6 +2,197 @@ package dominio.SolucionSOLID;
 
 import dominio.Alumno;
 import dominio.Curso;
+import dominio.SolucionSOLID.Gestor.GestorAlumnos;
+import dominio.SolucionSOLID.Gestor.GestorCursos;
+import exceptions.PrincipalException;
+import dominio.SolucionSOLID.GenericInterface.IGestor;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.function.Predicate;
+
+public class GestorInstituto {
+
+	private static GestorInstituto instance;
+	private ArrayList<Alumno> alumnosList;
+	private ArrayList<Curso> cursosList;
+
+	//SUBGESTORES
+	private IGestor<Alumno> alumnoGestor;
+	private IGestor<Curso> cursoGestor;
+/*
+//ALUMNOS
+	private ICreation<Alumno> alumnoCreation;
+	private IDeletion<Alumno> alumnoDelete;
+	private IGetSortedList<Alumno> alumnoGetListSorted;
+	private IGetFilteredList<Alumno> alumnoGetFiltered;
+	private IGetDefaultList<Alumno> alumnoDefaultList;
+
+	// CURSOS
+	private ICreation<Curso> cursoCreation;
+	private IDeletion<Curso> cursoDelete;
+	private IGetSortedList<Curso> cursoGetSortedList;
+	private IGetFilteredList<Curso> cursoGetFilteredList;
+	private IGetDefaultList<Curso> cursoDefaultList;
+
+	// TPODO Junto, ya no más
+	private GestorInstituto(
+			IGestor<Alumno> alumnoGestor,
+			IGestor<Curso> cursoGestor,
+			ICreation<Alumno> alumnoCreation,
+			IDeletion<Alumno> alumnoDelete,
+			IGetSortedList<Alumno> alumnoGetListSorted,
+			IGetFilteredList<Alumno> alumnoGetFiltered,
+			IGetDefaultList<Alumno> alumnoDefaultList,
+			ICreation<Curso> cursoCreation,
+			IDeletion<Curso> cursoDelete,
+			IGetSortedList<Curso> cursoGetSortedList,
+			IGetFilteredList<Curso> cursoGetFilteredList,
+			IGetDefaultList<Curso> cursoDefaultList) {
+
+		this.alumnoGestor = alumnoGestor;
+		this.cursoGestor = cursoGestor;
+
+		this.alumnoCreation = alumnoCreation;
+		this.alumnoDelete = alumnoDelete;
+		this.alumnoGetListSorted = alumnoGetListSorted;
+		this.alumnoGetFiltered = alumnoGetFiltered;
+		this.alumnoDefaultList = alumnoDefaultList;
+
+		this.cursoCreation = cursoCreation;
+		this.cursoDelete = cursoDelete;
+		this.cursoGetSortedList = cursoGetSortedList;
+		this.cursoGetFilteredList = cursoGetFilteredList;
+		this.cursoDefaultList = cursoDefaultList;
+	}
+
+ */
+
+
+	// Método estático parsa mantenerr la instancia unica de GestorInstituto
+	public static synchronized GestorInstituto getInstance(IGestor<Alumno> alumnoGestor, IGestor<Curso> cursoGestor){
+		/*IGestor<Alumno> alumnoGestor,
+			IGestor<Curso> cursoGestor,
+			ICreation<Alumno> alumnoCreation,
+			IDeletion<Alumno> alumnoDelete,
+			IGetSortedList<Alumno> alumnoGetListSorted,
+			IGetFilteredList<Alumno> alumnoGetFiltered,
+			IGetDefaultList<Alumno> alumnoDefaultList,
+			ICreation<Curso> cursoCreation,
+			IDeletion<Curso> cursoDelete,
+			IGetSortedList<Curso> cursoGetSortedList,
+			IGetFilteredList<Curso> cursoGetFilteredList,
+			IGetDefaultList<Curso> cursoDefaultList)
+		 */
+
+
+		if (instance == null) {
+			/*
+			//Lo separé en dos gestoraes
+			instance = new GestorInstituto(
+					alumnoGestor,
+					cursoGestor,
+					alumnoCreation,
+					alumnoDelete,
+					alumnoGetListSorted,
+					alumnoGetFiltered,
+					alumnoDefaultList,
+					cursoCreation,
+					cursoDelete,
+					cursoGetSortedList,
+					cursoGetFilteredList,
+					cursoDefaultList
+			);
+			 */
+			instance = new GestorInstituto( alumnoGestor, cursoGestor);
+		}
+		return instance;
+	}
+
+	public GestorInstituto(IGestor<Alumno> alumnoGestor, IGestor<Curso> cursoGestor) {
+		this.alumnoGestor = new GestorAlumnos(alumnosList,null,null,null,null,null);// alumnoGestor;
+		this.cursoGestor = new GestorCursos(cursosList,null,null,null,null,null);//cursoGestor;
+		this.alumnosList = new ArrayList<Alumno>();
+		this.cursosList = new ArrayList<Curso>();
+
+	}
+
+	public IGestor<Alumno> getGestorAlumnos() {
+		return alumnoGestor;
+	}
+
+	public IGestor<Curso> getGestorCursos() {
+		return cursoGestor;
+	}
+
+
+	// Métodos  de Alumnos
+
+	public boolean addAlumnoToList(Alumno alumno) throws PrincipalException {
+		//if (alumno == null) {
+		//	throw new IllegalArgumentException("El alumno no puede ser nulo.");
+		//}
+		//GestorAlumnos gestorAlumno = new GestorAlumnos(alumnosList,null,null,null,null,null);
+		return alumnoGestor.addToList(alumno);
+		//return alumnoGestor.addToList(alumno);//alumnoCreation.add(alumno);
+
+	}
+	public ArrayList<Alumno> getAlumnoDefaultList() {
+		return alumnoGestor.getDefaultList();//alumnoDefaultList.getList();
+	}
+
+	public boolean deleteAlumnoFromList(String dni) throws PrincipalException {
+		return alumnoGestor.deleteFromList(dni);
+	}
+
+	public ArrayList<Alumno> getAlumnosSortedList(Comparator<Alumno> comparatorAlumno) throws PrincipalException {
+		return alumnoGestor.getSortedList(comparatorAlumno) ;//alumnoGetListSorted.getSortedList(comparatorAlumno);
+	}
+
+	public ArrayList<Alumno> getAlumnoFilteredList(Predicate<Alumno> filtroAlumno) throws PrincipalException {
+		return alumnoGestor.getFilteredList(filtroAlumno);//alumnoGetFiltered.getFilteredList(filtroAlumno);
+	}
+
+	// Métodos  de Cursos
+
+	public boolean addCursoToList(Curso curso) throws PrincipalException {
+		if (curso == null) {
+			throw new IllegalArgumentException("El curso no puede ser nulo.");
+		}
+		return cursoGestor.addToList(curso);//cursoCreation.add(curso);
+	}
+
+	public boolean deleteCursoFromList(String nameCurso) throws PrincipalException {
+		return cursoGestor.deleteFromList(nameCurso);//cursoDelete.delete(nameCurso);
+	}
+
+	public ArrayList<Curso> getCursoSortedList(Comparator<Curso> comparatorSort) throws PrincipalException {
+		return cursoGestor.getSortedList(comparatorSort);//cursoGetSortedList.getSortedList(comparatorSort);
+	}
+
+	public ArrayList<Curso> getCursoFilteredList(Predicate<Curso> filterCurso) throws PrincipalException {
+		return cursoGestor.getFilteredList(filterCurso); // cursoGetFilteredList.getFilteredList(filterCurso);
+	}
+
+	public ArrayList<Curso> getCursosDefaultList() {
+		return cursoGestor.getDefaultList();//cursoDefaultList.getList();
+	}
+
+
+
+	// Listado de profesores
+	public String[] getProfessorList() {
+		return new String[]{"Sin definir", "Jeff Bezos", "Hedy Lamarr", "Marcos Galperin", "Jorge Tejada", "Mark Zuckerberg", "Elon Musk", "Mary Lee Woods"};
+	}
+
+
+}
+
+
+//THIS IS OLD
+/*
+import dominio.Alumno;
+import dominio.Curso;
 import dominio.SolucionSOLID.Alumno.*;
 import dominio.SolucionSOLID.Curso.*;
 import exceptions.*;
@@ -37,7 +228,7 @@ public class GestorInstituto {
 		System.out.println("CONSTRUCTOR : ");
 
 		listaAlumnos = new ArrayList<Alumno>();
-
+		// this.alumnoCreation = new AlumnoCreation();
 		listaCurso = new ArrayList<Curso>();
 	}
 /*
@@ -58,7 +249,7 @@ public class GestorInstituto {
 		return gestor;
 	}
 */
-	/*
+/*
 	//SOLID - inyecto Dependencias
 	public GestorInstituto (IAlumnoPersistencia alumnoPersistencia,
 							IAlumnoCreation alumnoCreating,
@@ -84,8 +275,8 @@ public class GestorInstituto {
 		this.cursoGetFilteredList = cursoGetFilteredList;
 		this.cursoGetDefaultList = cursoGetDefaultList;
 	}
-	 */
 
+/*
 	public GestorInstituto(IAlumnoGetDefaultList alumnosDefaultList,
 						   IAlumnoCreation alumnoCreating,
 						   IAlumnoDelete alumnoDeleting) {
@@ -113,8 +304,9 @@ public class GestorInstituto {
 		this.cursoGetDefaultList = cursoGetDefaultList;
 		this.listaCurso = cursoGetDefaultList.getListCursos();
 	}
+	 */
 
-
+/*
 	public static GestorInstituto getInstancia() {
 		if (gestor == null) {
 			gestor = new GestorInstituto();  // Llama al constructor sin parámetros
@@ -128,13 +320,14 @@ public class GestorInstituto {
 											   IAlumnoCreation alumnoCreating,
 											   IAlumnoDelete alumnoDeleting) {
 		if (gestor == null) {
-			gestor = new GestorInstituto(alumnosDefaultList, alumnoCreating, alumnoDeleting);
+			gestor = new GestorInstituto();
 		} else {
 			System.out.println("Ya se  inicializo GestorInstituto. No se puede cambiar la configuración.");
 		}
 		return gestor;
 	}
 
+	/*
 	public static GestorInstituto getInstancia(ICursoCreation cursoCreation,
 											   ICursoDelete cursoDelete,
 											   ICursoGetSortedList cursoGetSortedList,
@@ -148,19 +341,14 @@ public class GestorInstituto {
 		return gestor;
 	}
 
+	 */
+/*
 	//S, O y D principñles applied
 	//but IDK if do this is necessary.
 	public ArrayList<Alumno> getAlumnoDefaultList() {
 
 		return this.listaAlumnos;
 	}
-	/*
-	//old
-	public ArrayList<Alumno> getListaAlumnos() {
-		
-		return PersistenciaDB.getAlumnos();
-	}
-	 */
 
 	public void setListAlumnos(ArrayList<Alumno> listAlumnos) {
 		this.listaAlumnos = getAlumnoDefaultList();
@@ -177,12 +365,24 @@ public class GestorInstituto {
 		this.listaCurso = getCursosDefaultList();
 		//this.listaCurso = listaCurso;
 	}
-	
+
 	//Agregar alumnos ------------------------------
 
 	//Principio S y D
 	public boolean addAlumnoToList(Alumno alumno){
 		//System.out.println("VLAOR: " +  alumnoCreation.addAlumno(alumno) );
+		if (alumno == null) {
+			throw new IllegalArgumentException("El alumno no puede ser nulo.");
+		}
+
+		if (this.listaAlumnos == null) {
+			this.listaAlumnos = new ArrayList<>();
+		}
+		//aca rompo con solid:%
+		if (this.alumnoCreation == null) {
+			this.alumnoCreation = new AlumnoCreation();
+		}
+
 		return alumnoCreation.addAlumno(alumno);
 
 		//return this.listaAlumnos.add(alumno);
@@ -193,115 +393,19 @@ public class GestorInstituto {
 		return alumnoCreation.addAlumno( nombre,  apellido,  dni,  telefono);
 	}
 
-	/*
-	public boolean agregarAlumno(Alumno alumno) {//no debe recibir alumno, sino los datos de los text field
-		if (!existeAlumno1(alumno)) {
-			PersistenciaDB.insert(alumno);
-			this.listaAlumnos.add(alumno);
-			return true;
-		}
-		return false;	
-	}
 
-
-	public boolean agregarAlumno(String nombre, String apellido, String dni, String telefono) throws PrincipalException {//no debe recibir alumno, sino los datos de los text field
-		
-		try {
-			Alumno alumno = new Alumno(nombre, apellido, dni, telefono);
-		
-			if (existeAlumno1(alumno)) {
-				throw new PrincipalException("Ya se encuentra registrado.");
-			}
-			return this.listaAlumnos.add(alumno);
-			
-		}catch (DniInvalidoException e2) {
-			return false;
-		}catch (NombreVacioException e2) {
-			return false;
-		}catch (ApellidoVacioException e2) {
-			return false;
-		}catch (TelefonoInvalidoException e2) {
-			return false;
-		}catch (PrincipalException e) {
-			return false;
-		}		
-	}
-	*/
-
-	/*
-	//This method servía en la old version de gestor para validar si existía el alumno in the arraylist listadoAlumnos
-	private boolean existeAlumno1(Alumno alumno) {
-		ArrayList<Alumno> listaAlumnosDB = PersistenciaDB.getAlumnos();
-		
-		return listaAlumnosDB.stream()
-				.filter(a->a.getDni().equals(alumno.getDni()))
-				.findAny().isPresent();
-	}
-	 */
 
 	//Principio S y D
 	public boolean deleteAlumnoFromList(String dni) throws PrincipalException {
 		return alumnoDelete.deleteAlumno(dni);
 	}
 
-	/*
-	//This is a old method el cual eliminaba el alumno si lo encontraba luego de recorrer.
-	public boolean eliminarAlumno(String dni) throws PrincipalException {
-
-		ArrayList<Alumno> listaAlumnosDB  =  PersistenciaDB.getAlumnos();
-
-		for (Alumno alumno : listaAlumnosDB) {
-			if (alumno.getDni().equalsIgnoreCase(dni)) {
-
-				int opcion = JOptionPane.showConfirmDialog(
-						null,
-						"¿Deseas eliminar " + alumno.getNombre() + " " + alumno.getApellido() + "?",
-						"Confirmar eliminación",
-						JOptionPane.YES_NO_OPTION
-				);
-
-				if (opcion == JOptionPane.YES_OPTION) {
-					PersistenciaDB.delete(alumno.getDni());
-					return true;
-				} else {
-					return false;
-				}
-
-			}
-		}
-		throw new PrincipalException("No se encontró al alumno con el DNI ingresado");
-	}
-
-	 */
 
 	//- -.................CURSOS--------
 	public boolean addCursoToList(Curso curso) throws PrincipalException {
 		return cursoCreation.addCurso(curso);
 	}
-	/*
-	public boolean agregarCurso(Curso curso) throws PrincipalException {
-		if (noExisteCurso1(curso)) {
-			PersistenciaDBCurso.insert(curso);;
-			return this.listaCurso.add(curso);
-		}else {
-			throw new PrincipalException("El curso ya se encuentra registrado.");
-		}
-	}
 
-	 */
-	/*
-	//Buscar Elementos: old
-	public boolean noExisteCurso1(Curso curso) {
-		ArrayList<Curso> listadoCurso= PersistenciaDBCurso.getCursos();
-	    for (Curso c : listadoCurso) {
-	        if (c.getCodigo() == curso.getCodigo() || c.getNombre().trim().equalsIgnoreCase(curso.getNombre().trim())) {
-	            return false; // El curso ya existe en la lista
-	        }
-	    }
-	    return true; // El curso no existe en la lista
-	}
-
-	 */
 
 	public boolean deleteCursoFromList(String nameCurso) throws PrincipalException {
 		return cursoDelete.deleteCurso(nameCurso);
@@ -309,43 +413,7 @@ public class GestorInstituto {
 	}
 
 
-	/*
-	public boolean eliminarCurso(String nombreCurso) throws PrincipalException {
-		ArrayList<Curso> listaCurso =  PersistenciaDBCurso.getCursos();
-		ArrayList<Alumno> listaAlumnos = PersistenciaDB.getAlumnos();
-		
-		for (Curso curso : listaCurso) {
-			if (curso.getNombre().trim().equals(nombreCurso.trim()) && noContieneAlumnos(listaAlumnos, nombreCurso)==true) {
-//				System.out.println("elimino");
-				PersistenciaDBCurso.delete(nombreCurso);
-				
-				return true;
-			}
-		}
-		throw new PrincipalException("El curso que intentas eliminar tiene alumnos registrados");
-	}
 
-
-	//valida q existe un alumno inscripto en el curso
-	private boolean noContieneAlumnos(ArrayList<Alumno> alumnos, String nombreCurso) {
-		System.out.println("\n - actual >"+ nombreCurso+"<");
-		for (Alumno alumno2 : alumnos) {
-			String[] cursos= alumno2.getCursosNombre().split(", ");
-			
-			for (String curso : cursos) {
-//			    System.out.println("Longitud del curso: " + curso.length());
-//			    System.out.println("Longitud del cursoNOMBRE: " + nombreCurso.length());
-////				System.out.println(">>"+curso+"<<");
-//				System.out.println("CURSOS: "+ curso);
-                if (curso.trim().equals(nombreCurso.trim())) {
-                    return false;
-                }
-            }
-		}
-		return true;
-
-	}
-*/
 	//Not used
 	public String[] obtenerListadoProfes() {
 		return this.listaProfesores;
@@ -356,52 +424,17 @@ public class GestorInstituto {
 		return alumnoGetListSorted.getListadoAlumnosOrdenado(comparatorAlumno);
 	}
 
-	/*
-	public ArrayList<Alumno> getListadoAlumnosOrdenado(Comparator<Alumno> compa) throws PrincipalException{
-		ArrayList<Alumno> alumnos = PersistenciaDB.getAlumnos();//PersistenciaDB.getListaOrdenadaAlumno(compa);
-
-//		System.out.println("\nALUMNOS:  ");
-//		alumnos.stream().forEach(a->System.out.println(a.toString()));
-		alumnos = alumnos
-				.stream()
-				.sorted(compa)
-				.collect(Collectors.toCollection(ArrayList<Alumno>::new));
-		System.out.println("\n\nAfter ORDENAR");
-		alumnos.stream().forEach(a->System.out.println(a.toString()));
-		return alumnos;
-	}
-
-	 */
 
 	//Cursos ordenados SOLID -  S y D only
 	public ArrayList<Curso> getCursoSortedList(Comparator<Curso> comparatorSort){
 		return cursoGetSortedList.getCursosSortedByComparator(comparatorSort);
 	}
-	/*
-	public ArrayList<Curso> getListadoCursosOrdenado(Comparator<Curso> compa){
-		ArrayList<Curso> cursos = listaCurso
-				.stream()
-				.sorted(compa)
-				.collect(Collectors.toCollection(ArrayList<Curso>::new));
-		return cursos;
-	}
 
-	 */
 
 	//Cursos filtrados SOLID -  S y D only
 	public ArrayList<Curso> getCursoFilteredList(Predicate<Curso> filterCurso){
 		return cursoGetFilteredList.getListadoFiltrado(filterCurso);
 	}
-	/*
-	//devuelve lista filtrada
-	public ArrayList<Curso> getListadoFiltrado(Predicate<Curso> filtro){
-		ArrayList<Curso> listaCursos = PersistenciaDBCurso.getCursos();
-		return listaCurso.stream()
-				.filter(filtro) 
-				.collect(Collectors.toCollection(ArrayList::new));
-	}
-
-	 */
 
 	//	Principio S y D aplicado
 	public ArrayList<Alumno> getAlumnoFilteredList(Predicate<Alumno> filtroAlumno){
@@ -409,15 +442,9 @@ public class GestorInstituto {
 		//return getListadoFiltradoAlumno(filtroAlumno, ge);
 	}
 
-	/*
-	public ArrayList<Alumno> getListadoFiltradoAlumno(Predicate<Alumno> filtro){
-		ArrayList<Alumno> listaCursos = PersistenciaDB.getAlumnos();
-		return listaAlumnos.stream()
-				.filter(filtro) 
-				.collect(Collectors.toCollection(ArrayList::new));
-	}
 
-	 */
-	
-	
+
+
 }
+
+ */

@@ -1,18 +1,27 @@
 package dominio.SolucionSOLID.Curso;
 
+import dominio.Alumno;
 import dominio.Curso;
+import dominio.SolucionSOLID.GenericInterface.ICreation;
 import exceptions.PrincipalException;
 
-public class CursoCreation implements ICursoCreation {
+import java.util.ArrayList;
+
+public class CursoCreation implements ICreation <Curso> {
 
     private CursoValidationExisting cursoValidator;
     //add dependecies validaatorL
-    public CursoCreation(CursoValidationExisting cursoValidator){
-        this.cursoValidator = cursoValidator;
+    public CursoCreation(){
+        this.cursoValidator = new CursoValidationExisting();
     }
 
     @Override
-    public boolean addCurso(Curso curso) throws PrincipalException {
-        return cursoValidator.existingCurso(curso);
+    public boolean add(Curso curso, ArrayList<Curso> cursosList) {
+        boolean existe =  cursoValidator.existingCurso(curso, cursosList);
+        if (!existe){
+            return cursosList.add(curso);
+        }
+        return false;
     }
+
 }
